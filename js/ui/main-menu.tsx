@@ -1,10 +1,5 @@
-import { Alignment } from '@wonderlandengine/api';
-import {
-    Align,
-    FlexDirection,
-    Justify,
-    ReactUiBase,
-} from '@wonderlandengine/react-ui';
+import {Alignment} from '@wonderlandengine/api';
+import {Align, FlexDirection, Justify, ReactUiBase} from '@wonderlandengine/react-ui';
 import {
     Button,
     Container,
@@ -13,9 +8,9 @@ import {
     Row,
     Text,
 } from '@wonderlandengine/react-ui/components';
-import { ReactNode } from 'react';
-import { UIState } from '../classes/UIState.js';
-import { TileType } from '../classes/TileType.js';
+import {ReactNode} from 'react';
+import {UIState} from '../classes/UIState.js';
+import {TileType} from '../classes/TileType.js';
 
 const COLORSWATCHES = {
     CelestialBlue: '#4292CD',
@@ -30,7 +25,7 @@ const COLORSWATCHES = {
     DarkSpringGreen: '#247049',
 };
 
-const App = (props: { comp: MainMenu }) => {
+const App = (props: {comp: MainMenu}) => {
     const comp = props.comp;
     const onClick = (tileToPlace: TileType) => {
         UIState.instance.tileToPlace = tileToPlace;

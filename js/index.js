@@ -12,23 +12,21 @@
 import {CursorTarget} from '@wonderlandengine/components';
 import {OrbitalCamera} from '@wonderlandengine/components';
 import {WasdControlsComponent} from '@wonderlandengine/components';
-import {HexGridLayout} from './components/hex-grid-layout.js';
-import {MyCursor} from './components/my-cursor.js';
-import {Selection} from './components/selection.js';
-import {TilePrefabs} from './components/tile-prefabs.js';
-import {Zoom} from './components/zoom.js';
+import {HexGridLayout} from './components/core/hex-grid-layout.js';
+import {TilePrefabs} from './components/core/tile-prefabs.js';
+import {MyCursor} from './components/generic/my-cursor.js';
+import {Zoom} from './components/generic/zoom.js';
 import {MainMenu} from './ui/main-menu.tsx';
 /* wle:auto-imports:end */
 
-export default function(engine) {
-/* wle:auto-register:start */
+export default function (engine) {
+    /* wle:auto-register:start */
 engine.registerComponent(CursorTarget);
 engine.registerComponent(OrbitalCamera);
 engine.registerComponent(WasdControlsComponent);
 engine.registerComponent(HexGridLayout);
-engine.registerComponent(MyCursor);
-engine.registerComponent(Selection);
 engine.registerComponent(TilePrefabs);
+engine.registerComponent(MyCursor);
 engine.registerComponent(Zoom);
 engine.registerComponent(MainMenu);
 /* wle:auto-register:end */

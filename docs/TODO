@@ -1,7 +1,9 @@
 # TODO TownBuilder
 
 Bugs:
-    ☐ ui doesn't show @critical
+    ✔ ui doesn't show @critical @done(25-07-22 21:52)
+    The Z of the UI is set to -500, is that correct?
+    Should -500 be closer than 0?
 
 Must Have:
     ✔ Grid system @done(25-02-07 10:52)

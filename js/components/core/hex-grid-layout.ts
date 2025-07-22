@@ -1,12 +1,12 @@
-import { Component, Object3D } from '@wonderlandengine/api';
-import { property } from '@wonderlandengine/api/decorators.js';
-import { HexagonGrid } from '../classes/HexGrid.js';
-import { HexagonTile } from '../classes/HexagonTile.js';
-import { TileType } from '../classes/TileType.js';
-import { TilePrefabs } from './tile-prefabs.js';
-import { MyCursor } from './my-cursor.js';
-import { vec3 } from 'gl-matrix';
-import { UIState } from '../classes/UIState.js';
+import {Component, Object3D} from '@wonderlandengine/api';
+import {property} from '@wonderlandengine/api/decorators.js';
+import {HexagonGrid} from '../../classes/HexGrid.js';
+import {HexagonTile} from '../../classes/HexagonTile.js';
+import {TileType} from '../../classes/TileType.js';
+import {TilePrefabs} from './tile-prefabs.js';
+import {MyCursor} from '../generic/my-cursor.js';
+import {vec3} from 'gl-matrix';
+import {UIState} from '../../classes/UIState.js';
 
 /**
  * Component responsible for managing the hexagonal grid layout.
@@ -14,10 +14,10 @@ import { UIState } from '../classes/UIState.js';
 export class HexGridLayout extends Component {
     static TypeName = 'hex-grid-layout';
 
-    @property.object({ required: true })
+    @property.object({required: true})
     public cursorObject!: Object3D;
 
-    @property.object({ required: true })
+    @property.object({required: true})
     public highlight!: Object3D;
 
     private _tileMap: Map<TileType, string> = new Map([
@@ -66,7 +66,7 @@ export class HexGridLayout extends Component {
         const center = new HexagonTile(0, 0, 0);
         this._grid.addTile(center);
         let layer: HexagonTile[] = [center];
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 3; i++) {
             layer = this._expand(layer);
         }
         const tiles = this._grid.getAllTiles();
@@ -75,23 +75,17 @@ export class HexGridLayout extends Component {
             let hex: Object3D;
             switch (tile.type) {
                 case TileType.Empty: {
-                    hex = TilePrefabs.instance.spawn(
-                        this._tileMap.get(TileType.Empty)!
-                    );
+                    hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Empty)!);
                     hex.setPositionWorld([pos.x, -0.5, pos.y]);
                     break;
                 }
                 case TileType.Water: {
-                    hex = TilePrefabs.instance.spawn(
-                        this._tileMap.get(TileType.Water)!
-                    );
+                    hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Water)!);
                     hex.setPositionWorld([pos.x, -0.5, pos.y]);
                     break;
                 }
                 default: {
-                    hex = TilePrefabs.instance.spawn(
-                        this._tileMap.get(TileType.Grass)!
-                    );
+                    hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Grass)!);
                     hex.setPositionWorld([pos.x, 0, pos.y]);
                     break;
                 }
@@ -168,11 +162,7 @@ export class HexGridLayout extends Component {
     /**
      * Handles tile click events.
      */
-    private _onTileClick = (tilePos: {
-        x: number;
-        y: number;
-        z: number;
-    }): void => {
+    private _onTileClick = (tilePos: {x: number; y: number; z: number}): void => {
         if (!this._grid) {
             return;
         }
@@ -193,17 +183,13 @@ export class HexGridLayout extends Component {
     /**
      * Handles tile hover events.
      */
-    private _onTileHover = (tilePos: {
-        x: number;
-        y: number;
-        z: number;
-    }): void => {
+    private _onTileHover = (tilePos: {x: number; y: number; z: number}): void => {
         if (!this._grid) {
             return;
         }
         const tile = this._grid.getTile(tilePos.x, tilePos.y, tilePos.z);
         if (tile) {
-            this.engine.canvas.style.cursor = 'none';
+            //this.engine.canvas.style.cursor = 'none';
             this._hoveringTile = tile;
             const pos = vec3.create();
             tile.object.getPositionWorld(pos);
@@ -211,7 +197,7 @@ export class HexGridLayout extends Component {
             this.highlight.setPositionWorld(pos);
         } else {
             this.highlight.setScalingLocal([0, 0, 0]);
-            this.engine.canvas.style.cursor = 'auto';
+            //    this.engine.canvas.style.cursor = 'auto';
         }
     };
 }

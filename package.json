@@ -17,7 +17,7 @@
         "@sorskoot/wonderland-components": "^1.5.2",
         "@wonderlandengine/api": "^1.4.5",
         "@wonderlandengine/components": "^1.2.3",
-        "@wonderlandengine/react-ui": "0.2.4",
+        "@wonderlandengine/react-ui": "file:lib/wonderlandengine-react-ui-0.2.12.tgz",
         "gl-matrix": "^3.4.3"
     },
     "devDependencies": {

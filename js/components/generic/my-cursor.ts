@@ -1,7 +1,7 @@
 import {Component, Object3D, ViewComponent, Emitter} from '@wonderlandengine/api';
 import {property} from '@wonderlandengine/api/decorators.js';
 import {vec3, mat4, quat} from 'gl-matrix';
-import {HexagonTile} from '../classes/HexagonTile.js';
+import {HexagonTile} from '../../classes/HexagonTile.js';
 
 /**
  * A small epsilon value for float comparison.
@@ -165,7 +165,11 @@ export class MyCursor extends Component {
 
         const hit = this.engine.physics.rayCast(this._origin, this._direction, 255, 100);
         if (hit.hitCount > 0) {
-            const tilePos = HexagonTile.from2D(hit.locations[0][0], hit.locations[0][2]);
+            console.log(hit.getDistances()[0]);
+            const tilePos = HexagonTile.from2D(
+                hit.locations[0][0],
+                hit.locations[0][2] + 10
+            );
             if (
                 !this._areFloatsEqual(tilePos.x, this._lastTilePosition.x) ||
                 !this._areFloatsEqual(tilePos.y, this._lastTilePosition.y) ||

@@ -27,7 +27,7 @@
                     "view": {
                         "projectionType": "orthographic",
                         "extent": 25.0,
-                        "near": 0.001,
+                        "near": 0.1,
                         "far": 1000.0
                     },
                     "active": true
@@ -36,10 +36,10 @@
                     "type": "orbital-camera",
                     "orbital-camera": {
                         "minElevation": 25.0,
-                        "radial": 75.0,
+                        "radial": 200.0,
                         "mouseButtonIndex": 2,
-                        "maxZoom": 75.0,
-                        "minZoom": 75.0,
+                        "maxZoom": 200.0,
+                        "minZoom": 200.0,
                         "zoomSensitivity": 0.0
                     }
                 },
@@ -64,12 +64,6 @@
                 1.0,
                 0.9999997,
                 0.9999997
-            ],
-            "rotation": [
-                -0.258819,
-                0.0,
-                1.6700189675589172e-8,
-                0.9659258
             ],
             "translation": [
                 -0.0,
@@ -256,7 +250,7 @@
                         "material": "2",
                         "mesh": "3"
                     },
-                    "active": false
+                    "active": true
                 }
             ],
             "scaling": [
@@ -279,7 +273,7 @@
                         "mesh": "3",
                         "material": "2"
                     },
-                    "active": true
+                    "active": false
                 }
             ],
             "scaling": [
@@ -357,6 +351,11 @@
                         "height": 200
                     }
                 }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.0
             ]
         }
     },
@@ -685,7 +684,7 @@
         },
         "13": {
             "name": "UI Panel Textured",
-            "pipeline": "3",
+            "pipeline": "20",
             "Flat": {
                 "flatTexture": "6"
             }
@@ -982,9 +981,11 @@
                 "output": "TownBuilder.bundle.js",
                 "sourcePaths": [
                     "js/classes",
-                    "js/components",
+                    "js/components/core",
+                    "js/components/generic",
                     "js",
                     "js/ui",
+                    "js/components",
                     "js/utils"
                 ]
             },
@@ -1014,7 +1015,8 @@
         "runtime": {
             "viewObject": "2",
             "visualizePhysX": false,
-            "visualizeColliders": false
+            "visualizeColliders": false,
+            "visualizeOverdraw": false
         },
         "workspace": {
             "files": [
@@ -1074,7 +1076,8 @@
             },
             "features": {
                 "WITH_EMISSIVE": true
-            }
+            },
+            "depthFunction": "less or equal"
         },
         "7": {
             "link": {
@@ -1169,6 +1172,17 @@
                 "WITH_EMISSIVE": true
             }
         },
+        "20": {
+            "link": {
+                "name": "Flat Opaque Textured",
+                "file": "default"
+            },
+            "castShadows": true,
+            "name": "Flat Opaque Textured UI",
+            "depthWrite": true,
+            "depthFunction": "less or equal",
+            "depthTest": true
+        },
         "19": {
             "link": {
                 "name": "Flat Opaque",
@@ -1178,7 +1192,10 @@
             "blending": true,
             "blendSrcRgb": "source alpha",
             "blendDestRgb": "one minus source alpha",
-            "blendDestAlpha": "one minus source alpha"
+            "blendDestAlpha": "one minus source alpha",
+            "depthWrite": true,
+            "depthTest": true,
+            "depthFunction": "less or equal"
         }
     },
     "textures": {
