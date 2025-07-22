@@ -1,2 +1,5 @@
 .autosave/
 cache/
+node_modules/
+deploy/
+.editor/
