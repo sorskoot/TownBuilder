@@ -1,54 +1,117 @@
-# Wonderland Engine Project Day - February 2025
+# Game Design Document (GDD) - TownBuilder
 
-The game will be a tower defense game using KayKit assets.
+## Overview
 
-## challenges
+**Game Title:** TownBuilder  
+**Engine:** Wonderland Engine  
+**Developer:** Sorskoot  
+**Genre:** Strategy/Survival  
+**Objective:** Gather resources, build a town, and survive as long as possible.  
 
-1) Hexagon tiles ✅
-2) Camera motion -> Panning with drag? or WASD Maybe?
-3) Making roads stick together in Hex
-4) Path finding
+This project started as a one-day experiment and has potential for further development. The game focuses on resource management, town-building, and survival mechanics.
 
-## Rough plan
+---
 
-### 1. **Initial Setup (1 hour)**
+## Core Concepts
 
-- Set up a new project in Wonderland Engine.
-- Import KayKit hexagon tile asset packs.
-- Set up the project structure, including folders for assets, scripts, and prefabs.
+1. **Hexagonal Tiles:**  
+   The game world is built on a grid of hexagonal tiles, allowing for unique gameplay mechanics and strategic placement of buildings and resources.
 
-### 2. **Basic Game Mechanics (2 hours)**
+2. **Orthographic Camera:**  
+   The game uses an orthographic camera to provide a clear, top-down view of the game world, enhancing visibility and precision for building placement.
 
-- Implement hexagon tile placement for the tower defense grid.
-  - Create a system for placing hexagon tiles.
-  - Ensure the placement system is snapping tiles correctly.
-- Roads for the enemies to walk on
+3. **Building Placement:**  
+   Players can place buildings on hexagonal tiles to expand their town and unlock new functionalities.
 
-### 3. **Game Logic (2 hours)**
+4. **Resource Gathering:**  
+   AI-controlled units gather resources such as wood, stone, and food, which are essential for building and survival.
 
-- Implement basic enemy movement and pathfinding using the hexagon grid.
-- Implement tower shooting logic.
-- Set up basic enemy health and damage system.
-- Implement win/lose conditions (e.g., if enemies reach the base, game over).
+5. **Defensive Structures:**  
+   Players can construct defenses to protect their town from periodic enemy attacks.
 
-### 4. **UI Integration (1.5 hours)**
+6. **Combat and Survival:**  
+   Survive waves of enemy attacks by strategically managing resources and building defenses.
 
-- Set up the basic UI using ReactUI.
-  - Create a start screen, game screen, and game over screen.
-- Implement in-game UI elements:
-  - Health bar for enemies.
-  - Score and wave counters.
-  - Tower selection and placement UI.
+---
 
-### 5. **Polishing and Testing (1.5 hours)**
+## Gameplay Mechanics
 
-- Playtest the game to ensure core mechanics work correctly.
-- Debug any major issues.
-- Add basic sound effects if time permits.
-- Add basic animations if time permits.
+### Resource Management
 
-### 6. **Final Touches and Presentation (1 hour)**
+- **Resources:** Wood, stone, food, and other materials.
+- **Gathering:** AI units automatically gather resources from designated tiles.
+- **Storage:** Resources are stored in buildings with limited capacity.
 
-- Final playthrough to ensure everything is functional.
-- Prepare a short presentation or recording to showcase the game.
-- Highlight orthographic view and ReactUI features in the presentation.
+### Building System
+
+- **Placement:** Buildings can only be placed on specific hexagonal tiles.
+- **Types of Buildings:**
+  - Resource buildings (e.g., lumber mills, quarries).
+  - Defensive structures (e.g., walls, towers).
+  - Utility buildings (e.g., storage, housing).
+
+### AI Behavior
+
+- **Resource Gathering AI:** Units automatically seek and gather resources.
+- **Enemy AI:** Periodic waves of enemies attack the town, requiring defensive strategies.
+
+### Combat
+
+- **Defensive Structures:** Towers and walls can be built to fend off enemies.
+- **Combat Units:** Optional AI-controlled units to assist in defense.
+
+---
+
+## Visual and Audio Design
+
+### Art Style
+
+- **Assets:** Free assets from Kay or Kenny (initially). Paid assets may be considered for future expansions.
+- **Style:** Low-poly, colorful, and visually distinct for clarity.
+
+### Camera
+
+- **Type:** Orthographic camera for a clear, top-down view.
+- **Controls:** Smooth panning and zooming for better navigation.
+
+### Audio
+
+- **Background Music:** Relaxing and immersive.
+- **Sound Effects:** Feedback for resource gathering, building placement, and combat.
+
+---
+
+## Technical Details
+
+### Engine Features
+
+- **Hexagonal Grid System:** Custom implementation for tile-based gameplay.
+- **AI Systems:** Resource gathering and enemy behavior.
+- **Camera System:** Orthographic projection with smooth controls.
+
+### Performance Considerations
+
+- Optimize AI and rendering for large-scale towns.
+- Avoid creating unnecessary objects in update loops.
+
+---
+
+## Future Considerations
+
+- **Multiplayer Mode:** Cooperative or competitive gameplay.
+- **Expanded Resource Types:** Introduce advanced resources for complex buildings.
+- **Dynamic Events:** Random events like natural disasters or resource bonuses.
+- **Paid Assets:** Upgrade visuals with premium asset packs.
+
+---
+
+## Assets
+
+- **Source:** Free packs from Kay or Kenny.
+- **Future Plans:** Consider paid assets for additional buildings, units, and environmental details.
+
+---
+
+## Conclusion
+
+TownBuilder is a strategy/survival game that combines resource management, town-building, and combat mechanics. With its unique hexagonal grid system and orthographic camera, it offers a fresh take on the genre. The game is currently in its early stages, with potential for significant expansion.

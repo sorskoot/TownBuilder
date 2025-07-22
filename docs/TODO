@@ -1,10 +1,22 @@
-# TODO Project Day
+# TODO TownBuilder
+
+Bugs:
+    ☐ ui doesn't show @critical
 
 Must Have:
     ✔ Grid system @done(25-02-07 10:52)
+    ☐ WASD movement
     ☐ Placing tiles
+    ☐ better world generation
+        Should be infinite. I think it should be chunk based or something.
+        Not sure how that would work with a hex grid. Maybe the world should be a node graph internally?
+        Each node has 6 neighbors instead of 4.
+        Resource placement.
 
 Should Have:
+    ☐ some sort of fog of war effect
+        1) not have to create the entire world at the start
+        2) make it more interesting to explore
 
 Could Have:
 

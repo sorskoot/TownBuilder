@@ -1,56 +1,52 @@
-import {
-    Component,
-    Object3D,
-    InputComponent,
-    ViewComponent,
-    Emitter,
-    WonderlandEngine,
-    RayHit,
-    PhysXComponent,
-} from '@wonderlandengine/api';
-import { property } from '@wonderlandengine/api/decorators.js';
-import { vec3, mat4, quat } from 'gl-matrix';
-import { HexagonTile } from '../classes/HexagonTile.js';
+import {Component, Object3D, ViewComponent, Emitter} from '@wonderlandengine/api';
+import {property} from '@wonderlandengine/api/decorators.js';
+import {vec3, mat4, quat} from 'gl-matrix';
+import {HexagonTile} from '../classes/HexagonTile.js';
 
+/**
+ * A small epsilon value for float comparison.
+ */
 const EPSILON = 0.000001;
 
+/**
+ * Component for managing cursor interactions with the hexagonal grid.
+ */
 export class MyCursor extends Component {
     static TypeName = 'my-cursor';
 
-    @property.object({ required: true })
-    ray: Object3D;
+    @property.object({required: true})
+    public ray!: Object3D;
 
-    onTileHover = new Emitter<[{ x: number; y: number; z: number }]>();
-    onTileClick = new Emitter<[{ x: number; y: number; z: number }]>();
+    public onTileHover = new Emitter<[{x: number; y: number; z: number}]>();
+    public onTileClick = new Emitter<[{x: number; y: number; z: number}]>();
 
-    private _lastTilePosition: { x: number; y: number; z: number } = {
+    private _lastTilePosition: {x: number; y: number; z: number} = {
         x: 0,
         y: 0,
         z: 0,
     };
 
-    private _pointerPressed: boolean;
-    private _pointerDown: boolean;
-    private _pointerUp: boolean;
-    private _pointerPos: number[] = [-1, -1];
-    private _previousPointerPos: number[] = [-1, -1];
-    private _wasPointerDown = false;
-    private _wasPointerUp = false;
-    private _pointerMoved: boolean;
-    private _wasPointerMoved: boolean;
+    private _pointerDown: boolean = false;
+    private _wasPointerDown: boolean = false;
 
-    private _projectionMatrix = new Float32Array(16);
-    private _viewComponent: ViewComponent;
-    private _lastPointerPos: vec3 = [-1, -1, 0];
-    private _direction: vec3 = [0, 0, 0];
-    private _origin: vec3 = [0, 0, 0];
+    private _projectionMatrix: Float32Array = new Float32Array(16);
+    private _viewComponent!: ViewComponent;
+    private _lastPointerPos: vec3 = vec3.fromValues(-1, -1, 0);
+    private _direction: vec3 = vec3.create();
+    private _origin: vec3 = vec3.create();
 
-    start(): void {
+    /**
+     * Initializes the component and sets up the projection matrix.
+     */
+    public start(): void {
         this._viewComponent = this.object.getComponent(ViewComponent);
         this._viewComponent.getProjectionMatrix(this._projectionMatrix);
     }
 
-    onActivate(): void {
+    /**
+     * Activates the component and adds event listeners.
+     */
+    public onActivate(): void {
         const canvas = this.engine.canvas;
 
         this.engine.onResize.add(this._onViewportResize);
@@ -64,11 +60,12 @@ export class MyCursor extends Component {
         canvas.addEventListener('pointerup', this._onPointerUp);
 
         this._pointerDown = false;
-        this._pointerPressed = false;
-        this._pointerUp = false;
     }
 
-    onDeactivate(): void {
+    /**
+     * Deactivates the component and removes event listeners.
+     */
+    public onDeactivate(): void {
         const canvas = this.engine.canvas;
         this.engine.onResize.remove(this._onViewportResize);
         canvas.removeEventListener('pointerdown', this._onPointerDown);
@@ -76,44 +73,47 @@ export class MyCursor extends Component {
         canvas.removeEventListener('pointerup', this._onPointerUp);
 
         this._pointerDown = false;
-        this._pointerPressed = false;
-        this._pointerUp = false;
     }
 
-    update(delta: number): void {
-        this.updateDirection();
+    /**
+     * Updates the cursor's direction and handles pointer events.
+     * @param delta - The time elapsed since the last update.
+     */
+    public update(delta: number): void {
+        this._updateDirection();
         if (this._pointerDown) {
             if (!this._wasPointerDown) {
                 this._wasPointerDown = true;
-                // pointer is down and was not down before, so trigger event
+                // Pointer is down and was not down before, so trigger event
                 this.onTileClick.notify(this._lastTilePosition);
             }
         }
     }
-    private updateDirection() {
-        const bounds = this.engine.canvas!.getBoundingClientRect();
-        /* Get direction in normalized device coordinate space from mouse position */
-        const left = this._lastPointerPos[0] / bounds.width;
-        const top = this._lastPointerPos[1] / bounds.height;
-        this._direction[0] = 0; //left * 2 - 1;
-        this._direction[1] = 0; //-top * 2 + 1;
+
+    /**
+     * Updates the direction vector based on the pointer position.
+     */
+    private _updateDirection(): void {
+        this._direction[0] = 0;
+        this._direction[1] = 0;
         this._direction[2] = -1;
 
-        this.applyTransformAndProjectDirection();
+        this._applyTransformAndProjectDirection();
     }
 
-    private applyTransformAndProjectDirection() {
-        /* Reverse-project the direction into view space */
-        vec3.transformMat4(
-            this._direction,
-            this._direction,
-            this._projectionMatrix
-        );
+    /**
+     * Applies the projection matrix to the direction vector.
+     */
+    private _applyTransformAndProjectDirection(): void {
+        vec3.transformMat4(this._direction, this._direction, this._projectionMatrix);
         vec3.normalize(this._direction, this._direction);
-        this.applyTransformToDirection();
+        this._applyTransformToDirection();
     }
 
-    private applyTransformToDirection() {
+    /**
+     * Transforms the direction vector into world space.
+     */
+    private _applyTransformToDirection(): void {
         this.object.transformVectorWorld(this._direction, this._direction);
         this.object.getPositionWorld(this._origin);
 
@@ -121,89 +121,51 @@ export class MyCursor extends Component {
         const ndcY = 1 - (this._lastPointerPos[1] / window.innerHeight) * 2;
         const f = window.innerHeight / window.innerWidth;
 
-        // Calculate the local position based on NDC
         const v = this._viewComponent.extent / 2;
         const localPosition = vec3.fromValues(ndcX * v, ndcY * v * f, 50);
 
-        // Get the object's world rotation
         const rotationQuat = quat.create();
         this.object.getRotationWorld(rotationQuat);
 
-        // Transform the local position by the object's rotation
         vec3.transformQuat(localPosition, localPosition, rotationQuat);
 
-        // Set the transformed position to `_origin`
-        vec3.set(
-            this._origin,
-            localPosition[0],
-            localPosition[1] + 1,
-            localPosition[2]
-        );
+        vec3.set(this._origin, localPosition[0], localPosition[1] + 1, localPosition[2]);
     }
-    private _onViewportResize = () => {
-        if (!this._viewComponent) return;
-        /* Projection matrix will change if the viewport is resized, which will affect the
-         * projection matrix because of the aspect ratio. */
-        mat4.invert(
-            this._projectionMatrix,
-            this._viewComponent.projectionMatrix
-        );
+
+    /**
+     * Handles viewport resize events and updates the projection matrix.
+     */
+    private _onViewportResize = (): void => {
+        if (!this._viewComponent) {
+            return;
+        }
+        mat4.invert(this._projectionMatrix, this._viewComponent.projectionMatrix);
     };
 
-    // /* Pointer event handlers */
-    private _onPointerDown = (e: PointerEvent) => {
+    /**
+     * Handles pointer down events.
+     * @param e - The pointer event.
+     */
+    private _onPointerDown = (e: PointerEvent): void => {
         if (!e.isPrimary || e.button !== 0) {
             return;
         }
         this._pointerDown = true;
         this._wasPointerDown = false;
-        this._pointerUp = false;
     };
 
-    private _getDirectionFromQuaternion(rotationQuat: quat): vec3 {
-        const forward = vec3.fromValues(0, 0, -1); // Default forward direction
-        const direction = vec3.create();
-
-        // Transform the forward direction vector using the rotation quaternion
-        vec3.transformQuat(direction, forward, rotationQuat);
-
-        return direction;
-    }
-
-    private _onPointerMove = (e: PointerEvent) => {
+    /**
+     * Handles pointer move events.
+     * @param e - The pointer event.
+     */
+    private _onPointerMove = (e: PointerEvent): void => {
         this._lastPointerPos[0] = e.clientX;
         this._lastPointerPos[1] = e.clientY;
-        this.updateDirection();
-        // console.log(this._direction);
-        // const ndcX = (e.clientX / window.innerWidth) * 2 - 1;
-        // const ndcY = 1 - (e.clientY / window.innerHeight) * 2;
-        // const f = window.innerHeight / window.innerWidth;
-        // const pos = [ndcX * 12.5, ndcY * 12.5 * f, 0];
+        this._updateDirection();
 
-        // get direction from camera rotation
-        // const q = quat.create();
-        // this.object.getRotationWorld(q);
-        // const dir = this._getDirectionFromQuaternion(q);
-        //this.ray.setScalingWorld([1, 1, 1]);
-
-        const hit = this.engine.physics.rayCast(
-            this._origin,
-            this._direction,
-            255,
-            100
-        );
+        const hit = this.engine.physics.rayCast(this._origin, this._direction, 255, 100);
         if (hit.hitCount > 0) {
-            // this.ray.setPositionWorld([
-            //     hit.locations[0][0],
-            //     1,
-            //     hit.locations[0][2],
-            // ]);
-            // console.log();
-            const tilePos = HexagonTile.from2D(
-                hit.locations[0][0],
-                hit.locations[0][2]
-            );
-            // compare position with current position
+            const tilePos = HexagonTile.from2D(hit.locations[0][0], hit.locations[0][2]);
             if (
                 !this._areFloatsEqual(tilePos.x, this._lastTilePosition.x) ||
                 !this._areFloatsEqual(tilePos.y, this._lastTilePosition.y) ||
@@ -215,16 +177,23 @@ export class MyCursor extends Component {
         }
     };
 
-    private _onPointerUp = (e: PointerEvent) => {
-        // Only handle primary button
+    /**
+     * Handles pointer up events.
+     * @param e - The pointer event.
+     */
+    private _onPointerUp = (e: PointerEvent): void => {
         if (!e.isPrimary || e.button !== 0) {
             return;
         }
-        this._pointerUp = true;
-        this._wasPointerUp = false;
         this._pointerDown = false;
     };
 
+    /**
+     * Compares two floating-point numbers for equality within a small epsilon.
+     * @param a - The first number.
+     * @param b - The second number.
+     * @returns True if the numbers are approximately equal, false otherwise.
+     */
     private _areFloatsEqual(a: number, b: number): boolean {
         return Math.abs(a - b) < EPSILON;
     }

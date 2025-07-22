@@ -1,7 +1,7 @@
 {
-    "name": "Feb2025.wlp",
+    "name": "townbuilder",
     "version": "1.0.0",
-    "description": "My Wonderland project",
+    "description": "TownBuilder",
     "main": "js/index.js",
     "type": "module",
     "module": "js/index.js",
@@ -9,14 +9,21 @@
         "build": "echo \"The 'build' script is run by the editor and should produce your application bundle\""
     },
     "keywords": [
-        "wonderland-engine"
+        "wonderland-engine",
+        "sorskoot"
     ],
+    "prettier": "@wonderlandengine/prettier-config",
     "dependencies": {
-        "@sorskoot/wonderland-components": "^1.3.0",
+        "@sorskoot/wonderland-components": "^1.5.2",
         "@wonderlandengine/api": "^1.4.5",
-        "@wonderlandengine/components": "^1.2.1",
+        "@wonderlandengine/components": "^1.2.3",
         "@wonderlandengine/react-ui": "0.2.4",
         "gl-matrix": "^3.4.3"
+    },
+    "devDependencies": {
+        "@wonderlandengine/editor-api": "^1.4.5",
+        "@wonderlandengine/prettier-config": "^1.0.0",
+        "prettier": "^3.6.2"
     },
     "overrides": {
         "@wonderlandengine/api": "$@wonderlandengine/api"

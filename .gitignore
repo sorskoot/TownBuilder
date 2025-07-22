@@ -3,3 +3,4 @@ cache/
 node_modules/
 deploy/
 .editor/
+.vscode/settings.json

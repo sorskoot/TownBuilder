@@ -6,7 +6,7 @@
                 {
                     "type": "wasd-controls",
                     "wasd-controls": {
-                        "headObject": null,
+                        "headObject": "2",
                         "lockY": true
                     },
                     "active": false
@@ -47,7 +47,7 @@
                     "type": "my-cursor",
                     "my-cursor": {
                         "rayCastMode": "physx",
-                        "ray": "15",
+                        "ray": "11",
                         "target": "119"
                     }
                 },
@@ -72,9 +72,9 @@
                 0.9659258
             ],
             "translation": [
-                0.0,
+                -0.0,
                 2.0,
-                -5.960464477539065e-8
+                -8.940696716308594e-8
             ]
         },
         "3": {
@@ -187,7 +187,8 @@
                     "mesh": {
                         "material": "7",
                         "mesh": "8"
-                    }
+                    },
+                    "active": true
                 }
             ],
             "scaling": [
@@ -254,7 +255,8 @@
                     "mesh": {
                         "material": "2",
                         "mesh": "3"
-                    }
+                    },
+                    "active": false
                 }
             ],
             "scaling": [
@@ -277,7 +279,7 @@
                         "mesh": "3",
                         "material": "2"
                     },
-                    "active": false
+                    "active": true
                 }
             ],
             "scaling": [
@@ -979,9 +981,11 @@
             "components": {
                 "output": "TownBuilder.bundle.js",
                 "sourcePaths": [
-                    "js/",
+                    "js/classes",
                     "js/components",
-                    "js/ui"
+                    "js",
+                    "js/ui",
+                    "js/utils"
                 ]
             },
             "libraryPaths": [
@@ -1019,6 +1023,11 @@
         },
         "physx": {
             "enable": true
+        },
+        "plugins": {
+            "UpdatePaths.mjs": {
+                "enable": true
+            }
         }
     },
     "animations": {},

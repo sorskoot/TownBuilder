@@ -8,14 +8,17 @@ import { MyCursor } from './my-cursor.js';
 import { vec3 } from 'gl-matrix';
 import { UIState } from '../classes/UIState.js';
 
+/**
+ * Component responsible for managing the hexagonal grid layout.
+ */
 export class HexGridLayout extends Component {
     static TypeName = 'hex-grid-layout';
 
     @property.object({ required: true })
-    cursorObject: Object3D;
+    public cursorObject!: Object3D;
 
     @property.object({ required: true })
-    highlight: Object3D;
+    public highlight!: Object3D;
 
     private _tileMap: Map<TileType, string> = new Map([
         [TileType.Grass, 'TileGrass'],
@@ -24,86 +27,106 @@ export class HexGridLayout extends Component {
         [TileType.Road, 'TileRoad'],
     ]);
 
-    private _grid: HexagonGrid;
-    private _myCursor: MyCursor;
+    private _grid!: HexagonGrid;
+    private _myCursor!: MyCursor;
+    private _hoveringTile: HexagonTile | null = null;
 
-    start() {
+    /**
+     * Initializes the component and sets up the grid.
+     */
+    public start(): void {
         this._myCursor = this.cursorObject.getComponent(MyCursor);
         this.highlight.setScalingLocal([0, 0, 0]);
         setTimeout(() => {
-            this.createGrid();
-        }, 1000); //For now delay for a second... This will be from the menu later...
+            this._createGrid();
+        }, 1000); // Temporary delay for initialization
     }
 
-    onActivate() {
-        this._myCursor.onTileHover.add(this._onOnTileHover);
-        this._myCursor.onTileClick.add(this._onOnTileClick);
-    }
-    onDeactivate(): void {
-        this._myCursor.onTileHover.remove(this._onOnTileHover);
-        this._myCursor.onTileClick.remove(this._onOnTileClick);
+    /**
+     * Activates the component and adds event listeners.
+     */
+    public onActivate(): void {
+        this._myCursor.onTileHover.add(this._onTileHover);
+        this._myCursor.onTileClick.add(this._onTileClick);
     }
 
-    private createGrid() {
+    /**
+     * Deactivates the component and removes event listeners.
+     */
+    public onDeactivate(): void {
+        this._myCursor.onTileHover.remove(this._onTileHover);
+        this._myCursor.onTileClick.remove(this._onTileClick);
+    }
+
+    /**
+     * Creates the hexagonal grid and populates it with tiles.
+     */
+    private _createGrid(): void {
         this._grid = new HexagonGrid();
         const center = new HexagonTile(0, 0, 0);
         this._grid.addTile(center);
-        let layer = [center];
+        let layer: HexagonTile[] = [center];
         for (let i = 0; i < 50; i++) {
             layer = this._expand(layer);
         }
-        const tile = this._grid.getTiles();
-        for (const t of tile) {
-            const pos = t.to2D();
-            let hex;
-            switch (t.type) {
-                case TileType.Empty:
+        const tiles = this._grid.getAllTiles();
+        for (const tile of tiles) {
+            const pos = tile.to2D();
+            let hex: Object3D;
+            switch (tile.type) {
+                case TileType.Empty: {
                     hex = TilePrefabs.instance.spawn(
-                        this._tileMap.get(TileType.Empty)
+                        this._tileMap.get(TileType.Empty)!
                     );
                     hex.setPositionWorld([pos.x, -0.5, pos.y]);
                     break;
-                case TileType.Water:
+                }
+                case TileType.Water: {
                     hex = TilePrefabs.instance.spawn(
-                        this._tileMap.get(TileType.Water)
+                        this._tileMap.get(TileType.Water)!
                     );
                     hex.setPositionWorld([pos.x, -0.5, pos.y]);
                     break;
-                default:
+                }
+                default: {
                     hex = TilePrefabs.instance.spawn(
-                        this._tileMap.get(TileType.Grass)
+                        this._tileMap.get(TileType.Grass)!
                     );
                     hex.setPositionWorld([pos.x, 0, pos.y]);
                     break;
+                }
             }
-            t.object = hex;
-            hex.setPositionWorld([pos.x, 0, pos.y]);
+            tile.object = hex;
         }
         this._addPossibleTargets();
     }
 
     /**
-     * This function runs through all tiles and adds a empty tile to its neighbors if the tile is not empty
+     * Adds empty tiles to the neighbors of non-empty tiles.
      */
-    private _addPossibleTargets() {
-        const tiles = this._grid.getTiles();
-        for (const t of tiles) {
-            if (t.type === TileType.Empty) {
+    private _addPossibleTargets(): void {
+        const tiles = this._grid.getAllTiles();
+        for (const tile of tiles) {
+            if (tile.type === TileType.Empty) {
                 continue;
             }
-            for (const n of t.neighbors()) {
-                const neighbor = this._grid.getTile(n.x, n.y, n.z);
+            for (const neighborCoords of tile.neighbors()) {
+                const neighbor = this._grid.getTile(
+                    neighborCoords.x,
+                    neighborCoords.y,
+                    neighborCoords.z
+                );
                 if (!neighbor) {
                     const newTile = new HexagonTile(
-                        n.x,
-                        n.y,
-                        n.z,
+                        neighborCoords.x,
+                        neighborCoords.y,
+                        neighborCoords.z,
                         TileType.Empty
                     );
                     this._grid.addTile(newTile);
                     const pos = newTile.to2D();
                     const hex = TilePrefabs.instance.spawn(
-                        this._tileMap.get(TileType.Empty)
+                        this._tileMap.get(TileType.Empty)!
                     );
                     newTile.object = hex;
                     hex.setPositionWorld([pos.x, 0, pos.y]);
@@ -112,65 +135,83 @@ export class HexGridLayout extends Component {
         }
     }
 
+    /**
+     * Expands the grid by adding new tiles around the given tiles.
+     * @param tiles - The tiles to expand around.
+     * @returns The newly added tiles.
+     */
     private _expand(tiles: HexagonTile[]): HexagonTile[] {
-        let newTiles = [];
-        tiles.forEach((t) => {
-            for (const n of t.neighbors()) {
-                if (!this._grid.getTile(n.x, n.y, n.z)) {
-                    const t = new HexagonTile(
-                        n.x,
-                        n.y,
-                        n.z,
+        const newTiles: HexagonTile[] = [];
+        tiles.forEach((tile) => {
+            for (const neighborCoords of tile.neighbors()) {
+                if (
+                    !this._grid.getTile(
+                        neighborCoords.x,
+                        neighborCoords.y,
+                        neighborCoords.z
+                    )
+                ) {
+                    const newTile = new HexagonTile(
+                        neighborCoords.x,
+                        neighborCoords.y,
+                        neighborCoords.z,
                         Math.random() > 0.5 ? TileType.Grass : TileType.Water
                     );
-                    this._grid.addTile(t);
-                    newTiles.push(t);
+                    this._grid.addTile(newTile);
+                    newTiles.push(newTile);
                 }
             }
         });
         return newTiles;
     }
 
-    hoveringTile: HexagonTile = null;
-
-    _onOnTileClick = (tilePos: { x: number; y: number; z: number }) => {
-        if (!this._grid) return;
+    /**
+     * Handles tile click events.
+     */
+    private _onTileClick = (tilePos: {
+        x: number;
+        y: number;
+        z: number;
+    }): void => {
+        if (!this._grid) {
+            return;
+        }
         const tile = this._grid.getTile(tilePos.x, tilePos.y, tilePos.z);
-        if (tile) {
-            if (tile.type === TileType.Empty) {
-                tile.type = UIState.instance.tileToPlace;
-                tile.object.destroy();
-                const pos = tile.to2D();
-                const hex = TilePrefabs.instance.spawn(
-                    this._tileMap.get(UIState.instance.tileToPlace)
-                );
-                tile.object = hex;
-                hex.setPositionWorld([pos.x, 0, pos.y]);
-                this._addPossibleTargets();
-            }
+        if (tile && tile.type === TileType.Empty) {
+            tile.type = UIState.instance.tileToPlace;
+            tile.object.destroy();
+            const pos = tile.to2D();
+            const hex = TilePrefabs.instance.spawn(
+                this._tileMap.get(UIState.instance.tileToPlace)!
+            );
+            tile.object = hex;
+            hex.setPositionWorld([pos.x, 0, pos.y]);
+            this._addPossibleTargets();
         }
     };
 
-    _onOnTileHover = (tilePos: { x: number; y: number; z: number }) => {
-        if (!this._grid) return;
+    /**
+     * Handles tile hover events.
+     */
+    private _onTileHover = (tilePos: {
+        x: number;
+        y: number;
+        z: number;
+    }): void => {
+        if (!this._grid) {
+            return;
+        }
         const tile = this._grid.getTile(tilePos.x, tilePos.y, tilePos.z);
-        //const pos = HexagonTile.roundCube(tilePos.x, tilePos.y, tilePos.z);
-        //console.log('Tile Hovered:', tilePos);
-        // if (this.hoveringTile) {
-        //     this.hoveringTile.object.translateLocal([0, -0.5, 0]);
-        // }
         if (tile) {
             this.engine.canvas.style.cursor = 'none';
-            this.hoveringTile = tile;
+            this._hoveringTile = tile;
             const pos = vec3.create();
             tile.object.getPositionWorld(pos);
             this.highlight.setScalingLocal([1, 1, 1]);
             this.highlight.setPositionWorld(pos);
-            //this.hoveringTile.object.translateLocal([0, 0.5, 0]);
         } else {
             this.highlight.setScalingLocal([0, 0, 0]);
             this.engine.canvas.style.cursor = 'auto';
-            //  this.hoveringTile = null;
         }
     };
 }
