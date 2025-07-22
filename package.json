@@ -1,0 +1,24 @@
+{
+    "name": "Feb2025.wlp",
+    "version": "1.0.0",
+    "description": "My Wonderland project",
+    "main": "js/index.js",
+    "type": "module",
+    "module": "js/index.js",
+    "scripts": {
+        "build": "echo \"The 'build' script is run by the editor and should produce your application bundle\""
+    },
+    "keywords": [
+        "wonderland-engine"
+    ],
+    "dependencies": {
+        "@sorskoot/wonderland-components": "^1.3.0",
+        "@wonderlandengine/api": "^1.4.5",
+        "@wonderlandengine/components": "^1.2.1",
+        "@wonderlandengine/react-ui": "0.2.4",
+        "gl-matrix": "^3.4.3"
+    },
+    "overrides": {
+        "@wonderlandengine/api": "$@wonderlandengine/api"
+    }
+}

@@ -1,0 +1,647 @@
+{
+    "settings": {
+        "workspace": {
+            "main": "Feb2025.wlp"
+        },
+        "project": {
+            "name": "Tiles",
+            "prefab": true,
+            "version": [
+                1,
+                4,
+                5
+            ]
+        },
+        "runtime": {
+            "visualizeColliders": false,
+            "visualizePhysX": false,
+            "visualizeOverdraw": false
+        },
+        "rendering": {
+            "environment": {
+                "bakingMode": "sky",
+                "material": null
+            }
+        }
+    },
+    "files": {
+        "1": {
+            "fileName": "assets/tiles/hex_grass.gltf",
+            "importerName": "",
+            "importPhysicalAsPhongMaterials": true
+        },
+        "2": {
+            "fileName": "assets/textures/hexagons_medieval.png",
+            "importerName": ""
+        },
+        "3": {
+            "fileName": "assets/tiles/hex_water.gltf",
+            "importerName": "",
+            "importPhysicalAsPhongMaterials": true
+        },
+        "4": {
+            "fileName": "assets/tiles/hex_road_A.gltf",
+            "importerName": "",
+            "importPhysicalAsPhongMaterials": true
+        }
+    },
+    "images": {
+        "1": {
+            "link": {
+                "name": "hexagons_medieval.png",
+                "file": "assets\\textures\\hexagons_medieval.png"
+            }
+        }
+    },
+    "shaders": {
+        "1": {
+            "link": {
+                "name": "AtmosphericSky.frag",
+                "file": "default"
+            }
+        },
+        "2": {
+            "link": {
+                "name": "Background.frag",
+                "file": "default"
+            }
+        },
+        "3": {
+            "link": {
+                "name": "lib\\Color.glsl",
+                "file": "default"
+            }
+        },
+        "4": {
+            "link": {
+                "name": "lib\\Compatibility.glsl",
+                "file": "default"
+            }
+        },
+        "5": {
+            "link": {
+                "name": "lib\\CoordinateSystems.glsl",
+                "file": "default"
+            }
+        },
+        "6": {
+            "link": {
+                "name": "Depth.frag",
+                "file": "default"
+            }
+        },
+        "7": {
+            "link": {
+                "name": "DistanceFieldVector.frag",
+                "file": "default"
+            }
+        },
+        "8": {
+            "link": {
+                "name": "Dynamic.vert",
+                "file": "default"
+            }
+        },
+        "9": {
+            "link": {
+                "name": "Flat.frag",
+                "file": "default"
+            }
+        },
+        "10": {
+            "link": {
+                "name": "FullScreenTriangle.vert",
+                "file": "default"
+            }
+        },
+        "11": {
+            "link": {
+                "name": "lib\\GI.glsl",
+                "file": "default"
+            }
+        },
+        "12": {
+            "link": {
+                "name": "lib\\Inputs.glsl",
+                "file": "default"
+            }
+        },
+        "13": {
+            "link": {
+                "name": "lib\\Lights.glsl",
+                "file": "default"
+            }
+        },
+        "14": {
+            "link": {
+                "name": "lib\\Materials.glsl",
+                "file": "default"
+            }
+        },
+        "15": {
+            "link": {
+                "name": "lib\\Math.glsl",
+                "file": "default"
+            }
+        },
+        "16": {
+            "link": {
+                "name": "MeshVisualizer.frag",
+                "file": "default"
+            }
+        },
+        "17": {
+            "link": {
+                "name": "lib\\MorphTargets.glsl",
+                "file": "default"
+            }
+        },
+        "18": {
+            "link": {
+                "name": "lib\\Packing.glsl",
+                "file": "default"
+            }
+        },
+        "19": {
+            "link": {
+                "name": "Phong.frag",
+                "file": "default"
+            }
+        },
+        "20": {
+            "link": {
+                "name": "Physical.frag",
+                "file": "default"
+            }
+        },
+        "21": {
+            "link": {
+                "name": "lib\\PhysicalBSDF.glsl",
+                "file": "default"
+            }
+        },
+        "22": {
+            "link": {
+                "name": "lib\\Quaternion.glsl",
+                "file": "default"
+            }
+        },
+        "23": {
+            "link": {
+                "name": "Skinning.vert",
+                "file": "default"
+            }
+        },
+        "24": {
+            "link": {
+                "name": "Sky.frag",
+                "file": "default"
+            }
+        },
+        "25": {
+            "link": {
+                "name": "lib\\SkyProcedural.glsl",
+                "file": "default"
+            }
+        },
+        "26": {
+            "link": {
+                "name": "lib\\Slug.frag.glsl",
+                "file": "default"
+            }
+        },
+        "27": {
+            "link": {
+                "name": "lib\\Slug.vert.glsl",
+                "file": "default"
+            }
+        },
+        "28": {
+            "link": {
+                "name": "lib\\Surface.glsl",
+                "file": "default"
+            }
+        },
+        "29": {
+            "link": {
+                "name": "Text.frag",
+                "file": "default"
+            }
+        },
+        "30": {
+            "link": {
+                "name": "Text.vert",
+                "file": "default"
+            }
+        },
+        "31": {
+            "link": {
+                "name": "lib\\Textures.glsl",
+                "file": "default"
+            }
+        },
+        "32": {
+            "link": {
+                "name": "TileFeedback.frag",
+                "file": "default"
+            }
+        },
+        "33": {
+            "link": {
+                "name": "lib\\Uniforms.glsl",
+                "file": "default"
+            }
+        },
+        "34": {
+            "link": {
+                "name": "Particle.frag",
+                "file": "default"
+            }
+        },
+        "35": {
+            "link": {
+                "name": "lib\\Compatibility.glsl",
+                "file": "default"
+            }
+        },
+        "36": {
+            "link": {
+                "name": "lib\\GI.glsl",
+                "file": "default"
+            }
+        },
+        "37": {
+            "link": {
+                "name": "lib\\Inputs.glsl",
+                "file": "default"
+            }
+        },
+        "38": {
+            "link": {
+                "name": "lib\\Lights.glsl",
+                "file": "default"
+            }
+        },
+        "39": {
+            "link": {
+                "name": "lib\\Materials.glsl",
+                "file": "default"
+            }
+        },
+        "40": {
+            "link": {
+                "name": "lib\\Packing.glsl",
+                "file": "default"
+            }
+        },
+        "41": {
+            "link": {
+                "name": "lib\\Slug.frag.glsl",
+                "file": "default"
+            }
+        },
+        "42": {
+            "link": {
+                "name": "lib\\Slug.vert.glsl",
+                "file": "default"
+            }
+        },
+        "43": {
+            "link": {
+                "name": "lib\\Surface.glsl",
+                "file": "default"
+            }
+        },
+        "44": {
+            "link": {
+                "name": "lib\\Textures.glsl",
+                "file": "default"
+            }
+        }
+    },
+    "meshes": {
+        "1": {
+            "link": {
+                "name": "hex_grass",
+                "file": "assets\\tiles\\hex_grass.gltf"
+            }
+        },
+        "2": {
+            "link": {
+                "name": "hex_water",
+                "file": "assets\\tiles\\hex_water.gltf"
+            }
+        },
+        "3": {
+            "link": {
+                "name": "hex_road_A",
+                "file": "assets\\tiles\\hex_road_A.gltf"
+            }
+        }
+    },
+    "morphTargets": {},
+    "textures": {
+        "1": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\tiles\\hex_grass.gltf"
+            },
+            "image": "1"
+        },
+        "2": {
+            "link": {
+                "name": "hexagons_medieval.png",
+                "file": "assets\\textures\\hexagons_medieval.png"
+            }
+        },
+        "3": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\tiles\\hex_water.gltf"
+            }
+        },
+        "4": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\tiles\\hex_road_A.gltf"
+            }
+        }
+    },
+    "materials": {
+        "1": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\hex_grass.gltf"
+            }
+        },
+        "2": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\hex_grass.gltf"
+            },
+            "Phong": {
+                "diffuseTexture": null,
+                "shininess": 63,
+                "specularColor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.0
+                ]
+            },
+            "name": "Hexagons Tiles",
+            "pipeline": "4",
+            "Flat": {
+                "flatTexture": "2"
+            }
+        },
+        "3": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\hex_water.gltf"
+            }
+        },
+        "4": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\hex_road_A.gltf"
+            }
+        }
+    },
+    "objects": {
+        "1": {
+            "name": "TileGrass"
+        },
+        "2": {
+            "link": {
+                "name": "hex_grass",
+                "file": "assets\\tiles\\hex_grass.gltf"
+            },
+            "parent": "1",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "material": "2",
+                        "mesh": "1"
+                    }
+                }
+            ]
+        },
+        "3": {
+            "link": {
+                "name": "hex_water",
+                "file": "assets\\tiles\\hex_water.gltf"
+            },
+            "parent": "4",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "material": "2",
+                        "mesh": "2"
+                    }
+                }
+            ]
+        },
+        "4": {
+            "name": "TileWater",
+            "translation": [
+                3.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scaling": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "5": {
+            "name": "TileEmpty",
+            "translation": [
+                -3.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scaling": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "6": {
+            "name": "TileRoad",
+            "translation": [
+                -2.5,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scaling": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "7": {
+            "link": {
+                "name": "hex_road_A",
+                "file": "assets\\tiles\\hex_road_A.gltf"
+            },
+            "parent": "6",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scaling": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "material": "2",
+                        "mesh": "3"
+                    }
+                }
+            ]
+        }
+    },
+    "animations": {},
+    "skins": {},
+    "pipelines": {
+        "1": {
+            "link": {
+                "name": "Depth",
+                "file": "default"
+            }
+        },
+        "2": {
+            "link": {
+                "name": "DistanceFieldVector",
+                "file": "default"
+            }
+        },
+        "3": {
+            "link": {
+                "name": "Flat Opaque",
+                "file": "default"
+            }
+        },
+        "4": {
+            "link": {
+                "name": "Flat Opaque Textured",
+                "file": "default"
+            }
+        },
+        "5": {
+            "link": {
+                "name": "MeshVisualizer",
+                "file": "default"
+            }
+        },
+        "6": {
+            "link": {
+                "name": "Phong Opaque",
+                "file": "default"
+            }
+        },
+        "7": {
+            "link": {
+                "name": "Phong Opaque Textured",
+                "file": "default"
+            }
+        },
+        "8": {
+            "link": {
+                "name": "Phong Normalmapped",
+                "file": "default"
+            }
+        },
+        "9": {
+            "link": {
+                "name": "Phong Lightmapped",
+                "file": "default"
+            }
+        },
+        "10": {
+            "link": {
+                "name": "Physical Opaque",
+                "file": "default"
+            }
+        },
+        "11": {
+            "link": {
+                "name": "Physical Opaque Textured",
+                "file": "default"
+            }
+        },
+        "12": {
+            "link": {
+                "name": "Text",
+                "file": "default"
+            }
+        },
+        "13": {
+            "link": {
+                "name": "TileFeedback",
+                "file": "default"
+            }
+        },
+        "14": {
+            "link": {
+                "name": "Foliage",
+                "file": "default"
+            }
+        },
+        "15": {
+            "link": {
+                "name": "Particle",
+                "file": "default"
+            }
+        },
+        "16": {
+            "link": {
+                "name": "Sky",
+                "file": "default"
+            }
+        },
+        "17": {
+            "link": {
+                "name": "AtmosphericSky",
+                "file": "default"
+            }
+        }
+    },
+    "fonts": {},
+    "languages": {},
+    "particleEffects": {},
+    "probeVolumeScenarios": {}
+}

@@ -1,0 +1,1269 @@
+{
+    "objects": {
+        "1": {
+            "name": "Player",
+            "components": [
+                {
+                    "type": "wasd-controls",
+                    "wasd-controls": {
+                        "headObject": null,
+                        "lockY": true
+                    },
+                    "active": false
+                }
+            ],
+            "scaling": [
+                0.9999998,
+                1.0,
+                0.9999998
+            ]
+        },
+        "2": {
+            "name": "OrbitalCamera",
+            "parent": "1",
+            "components": [
+                {
+                    "type": "view",
+                    "view": {
+                        "projectionType": "orthographic",
+                        "extent": 25.0,
+                        "near": 0.001,
+                        "far": 1000.0
+                    },
+                    "active": true
+                },
+                {
+                    "type": "orbital-camera",
+                    "orbital-camera": {
+                        "minElevation": 25.0,
+                        "radial": 75.0,
+                        "mouseButtonIndex": 2,
+                        "maxZoom": 75.0,
+                        "minZoom": 75.0,
+                        "zoomSensitivity": 0.0
+                    }
+                },
+                {
+                    "type": "my-cursor",
+                    "my-cursor": {
+                        "rayCastMode": "physx",
+                        "ray": "15",
+                        "target": "119"
+                    }
+                },
+                {
+                    "type": "zoom",
+                    "zoom": {
+                        "minZoom": 10,
+                        "maxZoom": 100,
+                        "defaultZoom": 25
+                    }
+                }
+            ],
+            "scaling": [
+                1.0,
+                0.9999997,
+                0.9999997
+            ],
+            "rotation": [
+                -0.258819,
+                0.0,
+                1.6700189675589172e-8,
+                0.9659258
+            ],
+            "translation": [
+                0.0,
+                2.0,
+                -5.960464477539065e-8
+            ]
+        },
+        "3": {
+            "name": "Grid",
+            "components": [
+                {
+                    "type": "hex-grid-layout",
+                    "hex-grid-layout": {
+                        "tile": "94",
+                        "hexagonSize": 2.0,
+                        "tile2": "113",
+                        "cursorObject": "2",
+                        "highlight": "15"
+                    }
+                }
+            ]
+        },
+        "4": {
+            "name": "Prefabs"
+        },
+        "5": {
+            "name": "Sun",
+            "components": [
+                {
+                    "type": "light",
+                    "light": {
+                        "intensity": 9.0,
+                        "type": "sun",
+                        "outerAngle": 120.0,
+                        "shadows": true,
+                        "shadowRange": 100.0,
+                        "innerAngle": 110.0
+                    }
+                }
+            ],
+            "scaling": [
+                1.0000013,
+                0.9999992,
+                1.0
+            ],
+            "translation": [
+                -0.2080334,
+                3.2420809,
+                2.931658
+            ],
+            "rotation": [
+                0.2517566,
+                -0.7649072,
+                -0.1853631,
+                0.5631838
+            ],
+            "parent": "9"
+        },
+        "6": {
+            "name": "Light.000",
+            "components": [
+                {
+                    "type": "light",
+                    "light": {
+                        "intensity": 9.0,
+                        "type": "spot",
+                        "shadows": false,
+                        "outerAngle": 120.0,
+                        "innerAngle": 110.0,
+                        "shadowRange": 20.0
+                    }
+                }
+            ],
+            "scaling": [
+                0.9999988,
+                0.9999976,
+                0.9999989
+            ],
+            "translation": [
+                -2.3912231,
+                3.4619092,
+                -3.0973174
+            ],
+            "rotation": [
+                -0.3265219,
+                0.117685,
+                0.3179933,
+                0.8822776
+            ],
+            "parent": "9"
+        },
+        "7": {
+            "name": "Tiles",
+            "parent": "4",
+            "components": [
+                {
+                    "type": "tile-prefabs"
+                }
+            ],
+            "scaling": [
+                0.001,
+                0.001,
+                0.001
+            ]
+        },
+        "8": {
+            "link": {
+                "name": "building_castle_blue",
+                "file": "assets\\tiles\\building_castle_blue.gltf"
+            },
+            "parent": "3",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "material": "7",
+                        "mesh": "8"
+                    }
+                }
+            ],
+            "scaling": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "9": {
+            "name": "Lighting"
+        },
+        "10": {
+            "name": "Ground",
+            "components": [
+                {
+                    "type": "physx",
+                    "physx": {
+                        "gravity": false,
+                        "shape": "plane",
+                        "static": true,
+                        "translationOffset": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotationOffset": [
+                            -0.7071068,
+                            -0.7071068,
+                            5.3385083020884856e-8,
+                            5.338507591545749e-8
+                        ],
+                        "trigger": true
+                    }
+                },
+                {
+                    "type": "cursor-target"
+                },
+                {
+                    "type": "selection"
+                }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scaling": [
+                0.9999999,
+                0.9999999,
+                1.0
+            ]
+        },
+        "11": {
+            "name": "Mesh",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "material": "2",
+                        "mesh": "3"
+                    }
+                }
+            ],
+            "scaling": [
+                0.2,
+                0.2,
+                0.2
+            ]
+        },
+        "12": {
+            "name": "PhysicsBody",
+            "parent": "2"
+        },
+        "13": {
+            "name": "Mesh.000",
+            "parent": "12",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "3",
+                        "material": "2"
+                    },
+                    "active": false
+                }
+            ],
+            "scaling": [
+                0.2,
+                0.2,
+                0.2
+            ],
+            "translation": [
+                -0.0,
+                0.0000736,
+                -4.6460151
+            ],
+            "rotation": [
+                0.0,
+                -0.0,
+                -0.0,
+                1.0
+            ]
+        },
+        "14": {
+            "link": {
+                "name": "hex_grass_bottom",
+                "file": "assets\\tiles\\hex_grass_bottom.gltf"
+            },
+            "parent": "15",
+            "name": "hex_highlight",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "material": "11",
+                        "mesh": "10"
+                    }
+                }
+            ],
+            "scaling": [
+                1.1,
+                1.1,
+                1.1
+            ],
+            "translation": [
+                0.0,
+                0.1,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "15": {
+            "name": "Highlight",
+            "parent": "4"
+        },
+        "16": {
+            "name": "UI"
+        },
+        "17": {
+            "name": "MainMenu",
+            "parent": "16",
+            "components": [
+                {
+                    "type": "main-menu",
+                    "main-menu": {
+                        "space": "screen",
+                        "scalingMode": "FixedHeightLimitedWidth",
+                        "textMaterial": "DefaultFontMaterial",
+                        "panelMaterial": "12",
+                        "panelMaterialTextured": "13",
+                        "manualHeight": 900.0,
+                        "manualWidth": 620.0,
+                        "width": 200,
+                        "height": 200
+                    }
+                }
+            ]
+        }
+    },
+    "meshes": {
+        "1": {
+            "link": {
+                "name": "PrimitivePlane",
+                "file": "default"
+            }
+        },
+        "2": {
+            "link": {
+                "name": "PrimitiveCube",
+                "file": "default"
+            }
+        },
+        "3": {
+            "link": {
+                "name": "PrimitiveSphere",
+                "file": "default"
+            }
+        },
+        "4": {
+            "link": {
+                "name": "PrimitiveCone",
+                "file": "default"
+            }
+        },
+        "5": {
+            "link": {
+                "name": "PrimitiveCylinder",
+                "file": "default"
+            }
+        },
+        "6": {
+            "link": {
+                "name": "PrimitiveCircle",
+                "file": "default"
+            }
+        },
+        "7": {
+            "link": {
+                "name": "hex_grass",
+                "file": "assets\\tiles\\hex_grass.gltf"
+            },
+            "name": "hex_grass"
+        },
+        "8": {
+            "link": {
+                "name": "building_castle_blue",
+                "file": "assets\\tiles\\building_castle_blue.gltf"
+            }
+        },
+        "9": {
+            "link": {
+                "name": "hex_water",
+                "file": "assets\\tiles\\hex_water.gltf"
+            }
+        },
+        "10": {
+            "link": {
+                "name": "hex_grass_bottom",
+                "file": "assets\\tiles\\hex_grass_bottom.gltf"
+            }
+        }
+    },
+    "materials": {
+        "DefaultFontMaterial": {
+            "link": {
+                "name": "DefaultFontMaterial",
+                "file": "default"
+            },
+            "Text": {
+                "font": "1"
+            }
+        },
+        "1": {
+            "name": "White",
+            "Phong": {
+                "specularColor": [
+                    9.999899930335232e-7,
+                    9.99993744699168e-7,
+                    9.999999974752427e-7,
+                    1.0
+                ],
+                "shininess": 1,
+                "emissiveColor": [
+                    0.2,
+                    0.2,
+                    0.2,
+                    1.0
+                ],
+                "ambientColor": [
+                    0.05,
+                    0.05,
+                    0.05,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.5,
+                    0.5,
+                    0.5,
+                    1.0
+                ]
+            },
+            "pipeline": "5"
+        },
+        "2": {
+            "name": "Pink",
+            "Phong": {
+                "diffuseColor": [
+                    0.9098039,
+                    0.0,
+                    0.5411764,
+                    1.0
+                ],
+                "specularColor": [
+                    9.999899930335232e-7,
+                    9.999911299019004e-7,
+                    9.999999974752427e-7,
+                    1.0
+                ],
+                "shininess": 10,
+                "ambientColor": [
+                    0.05,
+                    0.05,
+                    0.05,
+                    1.0
+                ],
+                "emissiveColor": [
+                    0.1921568,
+                    0.0,
+                    0.1310161,
+                    1.0
+                ]
+            },
+            "pipeline": "5"
+        },
+        "3": {
+            "name": "Yellow",
+            "Phong": {
+                "diffuseColor": [
+                    1.0,
+                    0.8039215,
+                    0.0,
+                    1.0
+                ],
+                "specularColor": [
+                    9.999999974752427e-7,
+                    9.999899930335232e-7,
+                    9.999899930335232e-7,
+                    1.0
+                ],
+                "ambientColor": [
+                    0.05,
+                    0.05,
+                    0.05,
+                    1.0
+                ],
+                "emissiveColor": [
+                    0.2588235,
+                    0.2080737,
+                    0.0,
+                    1.0
+                ]
+            },
+            "pipeline": "5"
+        },
+        "4": {
+            "name": "Green",
+            "Phong": {
+                "diffuseColor": [
+                    0.1529411,
+                    0.7882353,
+                    0.5411764,
+                    1.0
+                ],
+                "specularColor": [
+                    9.999999974752427e-7,
+                    9.999899930335232e-7,
+                    9.999899930335232e-7,
+                    1.0
+                ],
+                "ambientColor": [
+                    0.05,
+                    0.05,
+                    0.05,
+                    1.0
+                ],
+                "emissiveColor": [
+                    0.0,
+                    0.1686274,
+                    0.10305,
+                    1.0
+                ]
+            },
+            "pipeline": "5"
+        },
+        "5": {
+            "name": "Sky",
+            "Phong": {
+                "specularColor": [
+                    9.999899930335232e-7,
+                    9.99993744699168e-7,
+                    9.999999974752427e-7,
+                    1.0
+                ],
+                "shininess": 1,
+                "emissiveColor": [
+                    0.2,
+                    0.2,
+                    0.2,
+                    1.0
+                ],
+                "ambientColor": [
+                    0.05,
+                    0.05,
+                    0.05,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.5,
+                    0.5,
+                    0.5,
+                    1.0
+                ]
+            },
+            "pipeline": "13",
+            "Sky": {
+                "colorStop3": [
+                    0.57584,
+                    0.5798863,
+                    0.5803921,
+                    1.0
+                ],
+                "colorStop2": [
+                    0.2023221,
+                    0.2037438,
+                    0.2039215,
+                    1.0
+                ],
+                "colorStop1": [
+                    0.2023221,
+                    0.2037438,
+                    0.2039215,
+                    1.0
+                ],
+                "colorStop0": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ]
+            }
+        },
+        "6": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\hex_grass.gltf"
+            },
+            "Phong": {
+                "diffuseTexture": "2",
+                "shininess": 63,
+                "specularColor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.0
+                ]
+            }
+        },
+        "7": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\hex_grass.gltf"
+            },
+            "Phong": {
+                "diffuseTexture": "2",
+                "shininess": 63,
+                "specularColor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.0
+                ]
+            },
+            "name": "Hexagons Tiles",
+            "pipeline": "3",
+            "Flat": {
+                "flatTexture": "2"
+            }
+        },
+        "8": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\building_castle_blue.gltf"
+            }
+        },
+        "9": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\hex_water.gltf"
+            }
+        },
+        "10": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\hex_grass_bottom.gltf"
+            }
+        },
+        "11": {
+            "name": "Hightlight Material",
+            "pipeline": "19",
+            "Flat": {
+                "color": [
+                    0.2588235,
+                    0.572549,
+                    0.8039215,
+                    0.5019608
+                ]
+            }
+        },
+        "12": {
+            "name": "UI Panel",
+            "pipeline": "19"
+        },
+        "13": {
+            "name": "UI Panel Textured",
+            "pipeline": "3",
+            "Flat": {
+                "flatTexture": "6"
+            }
+        }
+    },
+    "shaders": {
+        "2": {
+            "link": {
+                "name": "Flat.frag",
+                "file": "default"
+            }
+        },
+        "4": {
+            "link": {
+                "name": "MeshVisualizer.frag",
+                "file": "default"
+            }
+        },
+        "5": {
+            "link": {
+                "name": "Phong.frag",
+                "file": "default"
+            }
+        },
+        "7": {
+            "link": {
+                "name": "Dynamic.vert",
+                "file": "default"
+            }
+        },
+        "9": {
+            "link": {
+                "name": "Skinning.vert",
+                "file": "default"
+            }
+        },
+        "11": {
+            "link": {
+                "name": "DistanceFieldVector.frag",
+                "file": "default"
+            }
+        },
+        "12": {
+            "link": {
+                "name": "Particle.frag",
+                "file": "default"
+            }
+        },
+        "13": {
+            "link": {
+                "name": "Background.frag",
+                "file": "default"
+            }
+        },
+        "14": {
+            "link": {
+                "name": "Depth.frag",
+                "file": "default"
+            }
+        },
+        "15": {
+            "link": {
+                "name": "FullScreenTriangle.vert",
+                "file": "default"
+            }
+        },
+        "16": {
+            "link": {
+                "name": "Physical.frag",
+                "file": "default"
+            }
+        },
+        "17": {
+            "link": {
+                "name": "Sky.frag",
+                "file": "default"
+            }
+        },
+        "18": {
+            "link": {
+                "name": "Text.frag",
+                "file": "default"
+            }
+        },
+        "19": {
+            "link": {
+                "name": "Text.vert",
+                "file": "default"
+            }
+        },
+        "20": {
+            "link": {
+                "name": "TileFeedback.frag",
+                "file": "default"
+            }
+        },
+        "21": {
+            "link": {
+                "name": "lib\\Color.glsl",
+                "file": "default"
+            }
+        },
+        "22": {
+            "link": {
+                "name": "lib\\Compatibility.glsl",
+                "file": "default"
+            }
+        },
+        "23": {
+            "link": {
+                "name": "lib\\CoordinateSystems.glsl",
+                "file": "default"
+            }
+        },
+        "24": {
+            "link": {
+                "name": "lib\\GI.glsl",
+                "file": "default"
+            }
+        },
+        "25": {
+            "link": {
+                "name": "lib\\Inputs.glsl",
+                "file": "default"
+            }
+        },
+        "26": {
+            "link": {
+                "name": "lib\\Lights.glsl",
+                "file": "default"
+            }
+        },
+        "27": {
+            "link": {
+                "name": "lib\\Materials.glsl",
+                "file": "default"
+            }
+        },
+        "28": {
+            "link": {
+                "name": "lib\\Math.glsl",
+                "file": "default"
+            }
+        },
+        "29": {
+            "link": {
+                "name": "lib\\MorphTargets.glsl",
+                "file": "default"
+            }
+        },
+        "30": {
+            "link": {
+                "name": "lib\\Packing.glsl",
+                "file": "default"
+            }
+        },
+        "31": {
+            "link": {
+                "name": "lib\\PhysicalBSDF.glsl",
+                "file": "default"
+            }
+        },
+        "32": {
+            "link": {
+                "name": "lib\\Quaternion.glsl",
+                "file": "default"
+            }
+        },
+        "33": {
+            "link": {
+                "name": "lib\\Slug.frag.glsl",
+                "file": "default"
+            }
+        },
+        "34": {
+            "link": {
+                "name": "lib\\Slug.vert.glsl",
+                "file": "default"
+            }
+        },
+        "35": {
+            "link": {
+                "name": "lib\\Surface.glsl",
+                "file": "default"
+            }
+        },
+        "36": {
+            "link": {
+                "name": "lib\\Textures.glsl",
+                "file": "default"
+            }
+        },
+        "37": {
+            "link": {
+                "name": "lib\\Uniforms.glsl",
+                "file": "default"
+            }
+        },
+        "38": {
+            "link": {
+                "name": "AtmosphericSky.frag",
+                "file": "default"
+            }
+        },
+        "39": {
+            "link": {
+                "name": "lib\\SkyProcedural.glsl",
+                "file": "default"
+            }
+        },
+        "40": {
+            "link": {
+                "name": "lib\\Compatibility.glsl",
+                "file": "default"
+            }
+        },
+        "41": {
+            "link": {
+                "name": "lib\\GI.glsl",
+                "file": "default"
+            }
+        },
+        "42": {
+            "link": {
+                "name": "lib\\Inputs.glsl",
+                "file": "default"
+            }
+        },
+        "43": {
+            "link": {
+                "name": "lib\\Lights.glsl",
+                "file": "default"
+            }
+        },
+        "44": {
+            "link": {
+                "name": "lib\\Materials.glsl",
+                "file": "default"
+            }
+        },
+        "45": {
+            "link": {
+                "name": "lib\\Packing.glsl",
+                "file": "default"
+            }
+        },
+        "46": {
+            "link": {
+                "name": "lib\\Slug.frag.glsl",
+                "file": "default"
+            }
+        },
+        "47": {
+            "link": {
+                "name": "lib\\Slug.vert.glsl",
+                "file": "default"
+            }
+        },
+        "48": {
+            "link": {
+                "name": "lib\\Surface.glsl",
+                "file": "default"
+            }
+        },
+        "49": {
+            "link": {
+                "name": "lib\\Textures.glsl",
+                "file": "default"
+            }
+        }
+    },
+    "settings": {
+        "project": {
+            "name": "TownBuilder",
+            "version": [
+                1,
+                4,
+                5
+            ]
+        },
+        "xr": {
+            "leftEyeObject": null,
+            "rightEyeObject": null,
+            "vr": {
+                "enable": false
+            }
+        },
+        "scripting": {
+            "application": {
+                "output": "TownBuilder.app.js",
+                "bundling": "esbuild"
+            },
+            "components": {
+                "output": "TownBuilder.bundle.js",
+                "sourcePaths": [
+                    "js/",
+                    "js/components",
+                    "js/ui"
+                ]
+            },
+            "libraryPaths": [
+                "/js/lib/"
+            ]
+        },
+        "rendering": {
+            "hdr": {
+                "exposure": 1.5
+            },
+            "sky": {
+                "enabled": false,
+                "material": "5"
+            },
+            "clearColor": [
+                0.0,
+                0.75,
+                1.0,
+                1.0
+            ],
+            "environment": {
+                "bakingMode": "sky",
+                "material": "5"
+            }
+        },
+        "runtime": {
+            "viewObject": "2",
+            "visualizePhysX": false,
+            "visualizeColliders": false
+        },
+        "workspace": {
+            "files": [
+                "Tiles.wlp"
+            ]
+        },
+        "physx": {
+            "enable": true
+        }
+    },
+    "animations": {},
+    "skins": {},
+    "pipelines": {
+        "1": {
+            "link": {
+                "name": "DistanceFieldVector",
+                "file": "default"
+            }
+        },
+        "2": {
+            "link": {
+                "name": "Flat Opaque",
+                "file": "default"
+            }
+        },
+        "3": {
+            "link": {
+                "name": "Flat Opaque Textured",
+                "file": "default"
+            },
+            "castShadows": true
+        },
+        "4": {
+            "link": {
+                "name": "MeshVisualizer",
+                "file": "default"
+            }
+        },
+        "5": {
+            "link": {
+                "name": "Phong Opaque",
+                "file": "default"
+            },
+            "features": {
+                "WITH_EMISSIVE": true
+            }
+        },
+        "6": {
+            "link": {
+                "name": "Phong Opaque Textured",
+                "file": "default"
+            },
+            "features": {
+                "WITH_EMISSIVE": true
+            }
+        },
+        "7": {
+            "link": {
+                "name": "Foliage",
+                "file": "default"
+            }
+        },
+        "8": {
+            "link": {
+                "name": "Particle",
+                "file": "default"
+            }
+        },
+        "9": {
+            "link": {
+                "name": "Depth",
+                "file": "default"
+            }
+        },
+        "10": {
+            "link": {
+                "name": "Physical Opaque",
+                "file": "default"
+            },
+            "features": {
+                "SEPARATE_OCCLUSION_TEXTURE": true
+            }
+        },
+        "11": {
+            "link": {
+                "name": "Physical Opaque Textured",
+                "file": "default"
+            },
+            "features": {
+                "SEPARATE_OCCLUSION_TEXTURE": true
+            }
+        },
+        "12": {
+            "link": {
+                "name": "Text",
+                "file": "default"
+            }
+        },
+        "13": {
+            "link": {
+                "name": "Sky",
+                "file": "default"
+            },
+            "features": {
+                "GRADIENT": true,
+                "TEXTURED": false,
+                "GRADIENT_4_STOPS": true,
+                "ENVIRONMENT_PROBE": false
+            }
+        },
+        "14": {
+            "link": {
+                "name": "Phong Normalmapped",
+                "file": "default"
+            },
+            "features": {
+                "WITH_EMISSIVE": true
+            }
+        },
+        "15": {
+            "link": {
+                "name": "Phong Lightmapped",
+                "file": "default"
+            },
+            "features": {
+                "WITH_EMISSIVE": true
+            }
+        },
+        "16": {
+            "link": {
+                "name": "TileFeedback",
+                "file": "default"
+            }
+        },
+        "17": {
+            "link": {
+                "name": "AtmosphericSky",
+                "file": "default"
+            }
+        },
+        "18": {
+            "link": {
+                "name": "Phong Opaque",
+                "file": "default"
+            },
+            "features": {
+                "WITH_EMISSIVE": true
+            }
+        },
+        "19": {
+            "link": {
+                "name": "Flat Opaque",
+                "file": "default"
+            },
+            "name": "Flat Opaque Alpha",
+            "blending": true,
+            "blendSrcRgb": "source alpha",
+            "blendDestRgb": "one minus source alpha",
+            "blendDestAlpha": "one minus source alpha"
+        }
+    },
+    "textures": {
+        "1": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\tiles\\hex_grass.gltf"
+            }
+        },
+        "2": {
+            "link": {
+                "name": "hexagons_medieval.png",
+                "file": "assets\\textures\\hexagons_medieval.png"
+            }
+        },
+        "3": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\tiles\\building_castle_blue.gltf"
+            }
+        },
+        "4": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\tiles\\hex_water.gltf"
+            }
+        },
+        "5": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\tiles\\hex_grass_bottom.gltf"
+            }
+        },
+        "6": {
+            "link": {
+                "name": "ui_07.png",
+                "file": "assets\\textures\\ui_07.png"
+            }
+        }
+    },
+    "images": {
+        "1": {
+            "link": {
+                "name": "hexagons_medieval.png",
+                "file": "assets\\textures\\hexagons_medieval.png"
+            }
+        },
+        "2": {
+            "link": {
+                "name": "ui_07.png",
+                "file": "assets\\textures\\ui_07.png"
+            }
+        }
+    },
+    "fonts": {
+        "1": {
+            "link": {
+                "name": "DejaVuSans.ttf",
+                "file": "default"
+            }
+        }
+    },
+    "languages": {},
+    "files": {
+        "1": {
+            "fileName": "assets/tiles/hex_grass.gltf",
+            "importerName": "",
+            "importPhysicalAsPhongMaterials": true
+        },
+        "2": {
+            "fileName": "assets/textures/hexagons_medieval.png",
+            "importerName": ""
+        },
+        "3": {
+            "fileName": "assets/tiles/building_castle_blue.gltf",
+            "importerName": "",
+            "importPhysicalAsPhongMaterials": true
+        },
+        "4": {
+            "fileName": "assets/tiles/hex_water.gltf",
+            "importerName": "",
+            "importPhysicalAsPhongMaterials": true
+        },
+        "5": {
+            "fileName": "assets/tiles/hex_grass_bottom.gltf",
+            "importerName": "",
+            "importPhysicalAsPhongMaterials": true
+        },
+        "6": {
+            "fileName": "assets/textures/ui_07.png",
+            "importerName": ""
+        }
+    },
+    "morphTargets": {},
+    "particleEffects": {},
+    "probeVolumeScenarios": {}
+}

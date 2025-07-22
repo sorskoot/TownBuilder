@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "es2022",
+        "module": "nodenext",
+        "resolveJsonModule": true,
+        "moduleResolution": "nodenext",
+        "experimentalDecorators": true,
+        "jsx": "react-jsx",
+
+        //"allowJs": true,
+        //"strict": true,
+
+        "emitDecoratorMetadata": true,
+
+        "typeRoots": ["./node_modules/@types", "js/types/materials.d.ts"]
+    },
+    "exclude": ["node_modules", "dist"],
+    "include": [
+        "./js/**/*.js",
+        "./js/**/*.ts",
+        "./js/**/*.tsx",
+        "app.js",
+        "js/types/materials.d.ts"
+    ],
+    "types": ["@types/**", "./types/**"]
+}
