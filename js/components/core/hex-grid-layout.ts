@@ -7,6 +7,14 @@ import {TilePrefabs} from './tile-prefabs.js';
 import {MyCursor} from '../generic/my-cursor.js';
 import {vec3} from 'gl-matrix';
 import {UIState} from '../../classes/UIState.js';
+import {Mathf, Noise, rng, RNG} from '@sorskoot/wonderland-components';
+
+const definition = {
+    noiseScale: 25,
+    noiseOffset: 0,
+    heightScale: 8,
+    waterLevel: 0.25,
+};
 
 /**
  * Component responsible for managing the hexagonal grid layout.
@@ -76,17 +84,21 @@ export class HexGridLayout extends Component {
             switch (tile.type) {
                 case TileType.Empty: {
                     hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Empty)!);
-                    hex.setPositionWorld([pos.x, -0.5, pos.y]);
+                    hex.setPositionWorld([pos.x, -0.25, pos.y]);
                     break;
                 }
                 case TileType.Water: {
                     hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Water)!);
-                    hex.setPositionWorld([pos.x, -0.5, pos.y]);
+                    hex.setPositionWorld([pos.x, -0.25, pos.y]);
                     break;
                 }
                 default: {
                     hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Grass)!);
-                    hex.setPositionWorld([pos.x, 0, pos.y]);
+                    hex.setPositionWorld([
+                        pos.x,
+                        tile.elevation * definition.heightScale,
+                        pos.y,
+                    ]);
                     break;
                 }
             }
@@ -145,12 +157,21 @@ export class HexGridLayout extends Component {
                         neighborCoords.z
                     )
                 ) {
+                    const pos = tile.to2D();
+                    let value = Noise.simplex2(
+                        pos.x / definition.noiseScale + definition.noiseOffset,
+                        pos.y / definition.noiseScale + definition.noiseOffset
+                    );
+                    value = (value + 1) / 2; // Normalize to [0, 1]
                     const newTile = new HexagonTile(
                         neighborCoords.x,
                         neighborCoords.y,
                         neighborCoords.z,
-                        Math.random() > 0.5 ? TileType.Grass : TileType.Water
+                        value > definition.waterLevel ? TileType.Grass : TileType.Water
                     );
+                    newTile.elevation =
+                        Mathf.clamp(value, definition.waterLevel, 1) -
+                        definition.waterLevel; // Adjust elevation based on value
                     this._grid.addTile(newTile);
                     newTiles.push(newTile);
                 }
