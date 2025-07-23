@@ -66,7 +66,7 @@ export class HexGridLayout extends Component {
         const center = new HexagonTile(0, 0, 0);
         this._grid.addTile(center);
         let layer: HexagonTile[] = [center];
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 50; i++) {
             layer = this._expand(layer);
         }
         const tiles = this._grid.getAllTiles();

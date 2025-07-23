@@ -15,6 +15,8 @@ import {WasdControlsComponent} from '@wonderlandengine/components';
 import {HexGridLayout} from './components/core/hex-grid-layout.js';
 import {TilePrefabs} from './components/core/tile-prefabs.js';
 import {MyCursor} from './components/generic/my-cursor.js';
+import {OrbitalCamera as OrbitalCamera1} from './components/generic/my-orbital-camera.js';
+import {WasdMove} from './components/generic/wasd-move.js';
 import {Zoom} from './components/generic/zoom.js';
 import {MainMenu} from './ui/main-menu.tsx';
 /* wle:auto-imports:end */
@@ -27,6 +29,8 @@ engine.registerComponent(WasdControlsComponent);
 engine.registerComponent(HexGridLayout);
 engine.registerComponent(TilePrefabs);
 engine.registerComponent(MyCursor);
+engine.registerComponent(OrbitalCamera1);
+engine.registerComponent(WasdMove);
 engine.registerComponent(Zoom);
 engine.registerComponent(MainMenu);
 /* wle:auto-register:end */

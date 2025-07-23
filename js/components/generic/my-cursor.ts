@@ -17,6 +17,9 @@ export class MyCursor extends Component {
     @property.object({required: true})
     public ray!: Object3D;
 
+    @property.object({required: true})
+    player!: Object3D;
+
     public onTileHover = new Emitter<[{x: number; y: number; z: number}]>();
     public onTileClick = new Emitter<[{x: number; y: number; z: number}]>();
 
@@ -123,11 +126,14 @@ export class MyCursor extends Component {
 
         const v = this._viewComponent.extent / 2;
         const localPosition = vec3.fromValues(ndcX * v, ndcY * v * f, 50);
-
         const rotationQuat = quat.create();
         this.object.getRotationWorld(rotationQuat);
 
         vec3.transformQuat(localPosition, localPosition, rotationQuat);
+
+        const playerPos = vec3.create();
+        this.player.getPositionWorld(playerPos);
+        vec3.add(localPosition, localPosition, playerPos);
 
         vec3.set(this._origin, localPosition[0], localPosition[1] + 1, localPosition[2]);
     }
@@ -165,11 +171,7 @@ export class MyCursor extends Component {
 
         const hit = this.engine.physics.rayCast(this._origin, this._direction, 255, 100);
         if (hit.hitCount > 0) {
-            console.log(hit.getDistances()[0]);
-            const tilePos = HexagonTile.from2D(
-                hit.locations[0][0],
-                hit.locations[0][2] + 10
-            );
+            const tilePos = HexagonTile.from2D(hit.locations[0][0], hit.locations[0][2]);
             if (
                 !this._areFloatsEqual(tilePos.x, this._lastTilePosition.x) ||
                 !this._areFloatsEqual(tilePos.y, this._lastTilePosition.y) ||

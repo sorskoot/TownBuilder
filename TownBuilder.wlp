@@ -6,10 +6,17 @@
                 {
                     "type": "wasd-controls",
                     "wasd-controls": {
-                        "headObject": "2",
-                        "lockY": true
+                        "lockY": true,
+                        "headObject": "2"
                     },
                     "active": false
+                },
+                {
+                    "type": "wasd-move",
+                    "wasd-move": {
+                        "headObject": "2"
+                    },
+                    "active": true
                 }
             ],
             "scaling": [
@@ -41,22 +48,35 @@
                         "maxZoom": 200.0,
                         "minZoom": 200.0,
                         "zoomSensitivity": 0.0
-                    }
+                    },
+                    "active": false
                 },
                 {
                     "type": "my-cursor",
                     "my-cursor": {
                         "rayCastMode": "physx",
                         "ray": "11",
-                        "target": "119"
+                        "target": "119",
+                        "player": "1"
                     }
                 },
                 {
                     "type": "zoom",
                     "zoom": {
                         "minZoom": 10,
-                        "maxZoom": 100,
+                        "maxZoom": 35,
                         "defaultZoom": 25
+                    }
+                },
+                {
+                    "type": "my-orbital-camera",
+                    "my-orbital-camera": {
+                        "mouseButtonIndex": 2,
+                        "radial": 200.0,
+                        "minElevation": 25.0,
+                        "minZoom": 200.0,
+                        "maxZoom": 200.0,
+                        "target": "1"
                     }
                 }
             ],
@@ -68,7 +88,7 @@
             "translation": [
                 -0.0,
                 2.0,
-                -8.940696716308594e-8
+                -8.940696716308595e-8
             ]
         },
         "3": {

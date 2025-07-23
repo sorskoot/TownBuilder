@@ -12,7 +12,7 @@ import {ReactNode} from 'react';
 import {UIState} from '../classes/UIState.js';
 import {TileType} from '../classes/TileType.js';
 
-const COLORSWATCHES = {
+const COLOR_SWATCHES = {
     CelestialBlue: '#4292CD',
     Maize: '#E4E04E',
     AppleGreen: '#ACAF30',
@@ -44,20 +44,20 @@ const App = (props: {comp: MainMenu}) => {
                     rounding={2}
                     width={500}
                     height={100}
-                    backgroundColor={COLORSWATCHES.DarkSpringGreen}
+                    backgroundColor={COLOR_SWATCHES.DarkSpringGreen}
                 >
                     <Row gap={10}>
                         <Button
                             margin={10}
                             rounding={0}
-                            backgroundColor={COLORSWATCHES.AppleGreen}
+                            backgroundColor={COLOR_SWATCHES.AppleGreen}
                             width={80}
                             height={80}
                             hovered={{
-                                backgroundColor: COLORSWATCHES.CelestialBlue,
+                                backgroundColor: COLOR_SWATCHES.CelestialBlue,
                             }}
                             active={{
-                                backgroundColor: COLORSWATCHES.AppleGreen,
+                                backgroundColor: COLOR_SWATCHES.AppleGreen,
                             }}
                             justifyContent={Justify.Center}
                             onClick={() => onClick(TileType.Grass)}
@@ -67,14 +67,14 @@ const App = (props: {comp: MainMenu}) => {
                         <Button
                             margin={10}
                             rounding={0}
-                            backgroundColor={COLORSWATCHES.AppleGreen}
+                            backgroundColor={COLOR_SWATCHES.AppleGreen}
                             width={80}
                             height={80}
                             hovered={{
-                                backgroundColor: COLORSWATCHES.CelestialBlue,
+                                backgroundColor: COLOR_SWATCHES.CelestialBlue,
                             }}
                             active={{
-                                backgroundColor: COLORSWATCHES.AppleGreen,
+                                backgroundColor: COLOR_SWATCHES.AppleGreen,
                             }}
                             justifyContent={Justify.Center}
                             onClick={() => onClick(TileType.Water)}
@@ -84,14 +84,14 @@ const App = (props: {comp: MainMenu}) => {
                         <Button
                             margin={10}
                             rounding={0}
-                            backgroundColor={COLORSWATCHES.AppleGreen}
+                            backgroundColor={COLOR_SWATCHES.AppleGreen}
                             width={80}
                             height={80}
                             hovered={{
-                                backgroundColor: COLORSWATCHES.CelestialBlue,
+                                backgroundColor: COLOR_SWATCHES.CelestialBlue,
                             }}
                             active={{
-                                backgroundColor: COLORSWATCHES.AppleGreen,
+                                backgroundColor: COLOR_SWATCHES.AppleGreen,
                             }}
                             justifyContent={Justify.Center}
                             onClick={() => onClick(TileType.Road)}
