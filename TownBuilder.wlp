@@ -203,7 +203,7 @@
                         "material": "7",
                         "mesh": "8"
                     },
-                    "active": true
+                    "active": false
                 }
             ],
             "scaling": [

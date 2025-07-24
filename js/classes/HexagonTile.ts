@@ -1,5 +1,6 @@
 import {Object3D} from '@wonderlandengine/api';
 import {TileType} from './TileType.js';
+import {Tags} from './Tags.js';
 
 /**
  * The size of a hexagon tile, calculated based on the hexagon geometry.
@@ -15,6 +16,13 @@ export class HexagonTile {
      */
     private _object!: Object3D;
 
+    private _id: string;
+    private tags: Set<string> = new Set();
+
+    public get id(): string {
+        return this._id;
+    }
+
     /**
      * Creates a new HexagonTile instance.
      * @param x - The x-coordinate in cube coordinates.
@@ -28,7 +36,9 @@ export class HexagonTile {
         public z: number,
         public type: TileType = TileType.Grass,
         public elevation: number = 0
-    ) {}
+    ) {
+        this._id = `${x},${y},${z}`;
+    }
 
     /**
      * Gets the 3D object associated with this tile.
@@ -115,5 +125,13 @@ export class HexagonTile {
         }
 
         return [rx, ry, rz];
+    }
+
+    public addTag(tag: string): void {
+        Tags.setTag(tag, this._id);
+    }
+
+    public hasTag(tag: string): boolean {
+        return Tags.hasTag(tag, this._id);
     }
 }
