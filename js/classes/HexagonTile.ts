@@ -17,7 +17,6 @@ export class HexagonTile {
     private _object!: Object3D;
 
     private _id: string;
-    private tags: Set<string> = new Set();
 
     public get id(): string {
         return this._id;

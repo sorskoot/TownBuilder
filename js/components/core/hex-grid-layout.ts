@@ -54,7 +54,7 @@ export class HexGridLayout extends Component {
      * Initializes the component and sets up the grid.
      */
     public start(): void {
-        Noise.seed(+new Date());
+        Noise.seed(Date.now());
 
         this._myCursor = this.cursorObject.getComponent(MyCursor);
         this.highlight.setScalingLocal([0, 0, 0]);
@@ -155,7 +155,7 @@ export class HexGridLayout extends Component {
                 startElevation,
                 tile.elevation,
                 distance / globalConfig.castleFlattenDistance,
-                Easing.Hermite //.InOutQuad
+                Easing.Hermite
             );
             tile.type = TileType.Grass; // Ensure the tile is grass
 
