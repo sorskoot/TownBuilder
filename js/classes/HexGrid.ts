@@ -1,5 +1,5 @@
-import { HexagonTile } from './HexagonTile.js';
-import { TileType } from './TileType.js';
+import {HexagonTile} from './HexagonTile.js';
+import {TileType} from './TileType.js';
 
 /**
  * Represents a grid of hexagonal tiles.
@@ -15,8 +15,6 @@ export class HexagonGrid {
      */
     constructor() {
         this._tiles = new Map();
-        // Add the center tile
-        this.addTile(new HexagonTile(0, 0, 0, TileType.Castle));
     }
 
     /**
@@ -49,7 +47,11 @@ export class HexagonGrid {
      * @returns The hexagon tile at the specified coordinates, or undefined if not found.
      */
     public getTile(x: number, y: number, z: number): HexagonTile | undefined {
-        return this._tiles.get(this.getKey(x, y, z));
+        return this.getTileById(this.getKey(x, y, z));
+    }
+
+    public getTileById(id: string): HexagonTile | undefined {
+        return this._tiles.get(id);
     }
 
     /**

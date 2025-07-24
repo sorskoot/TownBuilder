@@ -7,13 +7,24 @@ import {TilePrefabs} from './tile-prefabs.js';
 import {MyCursor} from '../generic/my-cursor.js';
 import {vec3} from 'gl-matrix';
 import {UIState} from '../../classes/UIState.js';
-import {Mathf, Noise, rng, RNG} from '@sorskoot/wonderland-components';
+import {
+    Easing,
+    lerp,
+    Mathf,
+    Noise,
+    rng,
+    RNG,
+    wlUtils,
+} from '@sorskoot/wonderland-components';
 
-const definition = {
+import {Tags} from '../../classes/Tags.js';
+
+const globalConfig = {
     noiseScale: 25,
     noiseOffset: 0,
-    heightScale: 8,
-    waterLevel: 0.25,
+    heightScale: 4,
+    waterLevel: 0.3,
+    castleFlattenDistance: 5,
 };
 
 /**
@@ -43,6 +54,8 @@ export class HexGridLayout extends Component {
      * Initializes the component and sets up the grid.
      */
     public start(): void {
+        Noise.seed(+new Date());
+
         this._myCursor = this.cursorObject.getComponent(MyCursor);
         this.highlight.setScalingLocal([0, 0, 0]);
         setTimeout(() => {
@@ -71,12 +84,21 @@ export class HexGridLayout extends Component {
      */
     private _createGrid(): void {
         this._grid = new HexagonGrid();
-        const center = new HexagonTile(0, 0, 0);
+        const center = new HexagonTile(0, 0, 0, TileType.Grass, 0.75);
+        center.addTag('castle'); // Tag the center tile as a castle
+
         this._grid.addTile(center);
         let layer: HexagonTile[] = [center];
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 20; i++) {
             layer = this._expand(layer);
         }
+        // flatten around castle
+        this._flattenNeighborsBFS(center, center.elevation);
+
+        // Wave Function Collapse:
+        // loop and loop and loop until all tiles are settled.
+
+        // Render the tiles.
         const tiles = this._grid.getAllTiles();
         for (const tile of tiles) {
             const pos = tile.to2D();
@@ -96,7 +118,7 @@ export class HexGridLayout extends Component {
                     hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Grass)!);
                     hex.setPositionWorld([
                         pos.x,
-                        tile.elevation * definition.heightScale,
+                        tile.elevation * globalConfig.heightScale,
                         pos.y,
                     ]);
                     break;
@@ -104,7 +126,48 @@ export class HexGridLayout extends Component {
             }
             tile.object = hex;
         }
-        this._addPossibleTargets();
+
+        // Add Castle
+        const castleTileID = Tags.getTilesWithTag('castle')[0];
+        const castleTile = this._grid.getTileById(castleTileID);
+        const castleObject = TilePrefabs.instance.spawn(
+            'BuildingCastle',
+            castleTile.object
+        );
+        //this._addPossibleTargets();
+    }
+
+    private _flattenNeighborsBFS(rootTile: HexagonTile, startElevation: number): void {
+        const queue: {tile: HexagonTile; distance: number}[] = [
+            {tile: rootTile, distance: 0},
+        ];
+        const visitedTiles = new Set<string>();
+        visitedTiles.add(rootTile.id);
+
+        while (queue.length > 0) {
+            const {tile, distance} = queue.shift()!;
+
+            if (distance >= globalConfig.castleFlattenDistance) {
+                continue; // Stop flattening after a certain distance
+            }
+
+            tile.elevation = lerp(
+                startElevation,
+                tile.elevation,
+                distance / globalConfig.castleFlattenDistance,
+                Easing.Hermite //.InOutQuad
+            );
+            tile.type = TileType.Grass; // Ensure the tile is grass
+
+            for (const neighbor of tile.neighbors()) {
+                const neighborTile = this._grid.getTile(neighbor.x, neighbor.y, neighbor.z);
+
+                if (neighborTile && !visitedTiles.has(neighborTile.id)) {
+                    visitedTiles.add(neighborTile.id);
+                    queue.push({tile: neighborTile, distance: distance + 1});
+                }
+            }
+        }
     }
 
     /**
@@ -159,16 +222,17 @@ export class HexGridLayout extends Component {
                 ) {
                     const pos = tile.to2D();
                     let value = Noise.simplex2(
-                        pos.x / definition.noiseScale + definition.noiseOffset,
-                        pos.y / definition.noiseScale + definition.noiseOffset
+                        pos.x / globalConfig.noiseScale + globalConfig.noiseOffset,
+                        pos.y / globalConfig.noiseScale + globalConfig.noiseOffset
                     );
                     value = (value + 1) / 2; // Normalize to [0, 1]
                     const newTile = new HexagonTile(
                         neighborCoords.x,
                         neighborCoords.y,
                         neighborCoords.z,
-                        value > definition.waterLevel ? TileType.Grass : TileType.Water,
-                        Mathf.clamp(value, definition.waterLevel, 1) - definition.waterLevel
+                        value > globalConfig.waterLevel ? TileType.Grass : TileType.Water,
+                        Mathf.clamp(value, globalConfig.waterLevel, 1) -
+                            globalConfig.waterLevel
                     );
 
                     this._grid.addTile(newTile);

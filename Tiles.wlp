@@ -43,6 +43,11 @@
             "fileName": "assets/tiles/hex_road_A.gltf",
             "importerName": "",
             "importPhysicalAsPhongMaterials": true
+        },
+        "5": {
+            "fileName": "assets/tiles/building_castle_blue.gltf",
+            "importerName": "",
+            "importPhysicalAsPhongMaterials": true
         }
     },
     "images": {
@@ -337,6 +342,12 @@
                 "name": "hex_road_A",
                 "file": "assets\\tiles\\hex_road_A.gltf"
             }
+        },
+        "4": {
+            "link": {
+                "name": "building_castle_blue",
+                "file": "assets\\tiles\\building_castle_blue.gltf"
+            }
         }
     },
     "morphTargets": {},
@@ -364,6 +375,12 @@
             "link": {
                 "name": "texture_0",
                 "file": "assets\\tiles\\hex_road_A.gltf"
+            }
+        },
+        "5": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\tiles\\building_castle_blue.gltf"
             }
         }
     },
@@ -405,6 +422,12 @@
             "link": {
                 "name": "hexagons_medieval",
                 "file": "assets\\tiles\\hex_road_A.gltf"
+            }
+        },
+        "5": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\building_castle_blue.gltf"
             }
         }
     },
@@ -529,6 +552,24 @@
                     "mesh": {
                         "material": "2",
                         "mesh": "3"
+                    }
+                }
+            ]
+        },
+        "8": {
+            "name": "BuildingCastle"
+        },
+        "9": {
+            "link": {
+                "name": "building_castle_blue",
+                "file": "assets\\tiles\\building_castle_blue.gltf"
+            },
+            "parent": "8",
+            "components": [
+                {
+                    "originalIndex": 0,
+                    "mesh": {
+                        "material": "2"
                     }
                 }
             ]
