@@ -65,7 +65,7 @@
                     "type": "zoom",
                     "zoom": {
                         "minZoom": 10,
-                        "maxZoom": 35,
+                        "maxZoom": 100,
                         "defaultZoom": 25
                     }
                 },
@@ -89,7 +89,7 @@
             "translation": [
                 -0.0,
                 2.0,
-                -8.940696716308595e-8
+                -8.940696716308596e-8
             ]
         },
         "3": {

@@ -167,11 +167,10 @@ export class HexGridLayout extends Component {
                         neighborCoords.x,
                         neighborCoords.y,
                         neighborCoords.z,
-                        value > definition.waterLevel ? TileType.Grass : TileType.Water
+                        value > definition.waterLevel ? TileType.Grass : TileType.Water,
+                        Mathf.clamp(value, definition.waterLevel, 1) - definition.waterLevel
                     );
-                    newTile.elevation =
-                        Mathf.clamp(value, definition.waterLevel, 1) -
-                        definition.waterLevel; // Adjust elevation based on value
+
                     this._grid.addTile(newTile);
                     newTiles.push(newTile);
                 }
