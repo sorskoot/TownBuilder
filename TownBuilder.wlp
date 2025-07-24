@@ -14,7 +14,8 @@
                 {
                     "type": "wasd-move",
                     "wasd-move": {
-                        "headObject": "2"
+                        "headObject": "2",
+                        "speed": 1.0
                     },
                     "active": true
                 }
@@ -245,9 +246,6 @@
                 },
                 {
                     "type": "cursor-target"
-                },
-                {
-                    "type": "selection"
                 }
             ],
             "translation": [
@@ -1022,9 +1020,9 @@
                 "material": "5"
             },
             "clearColor": [
-                0.0,
-                0.75,
-                1.0,
+                0.5607843,
+                0.5568627,
+                0.0627451,
                 1.0
             ],
             "environment": {

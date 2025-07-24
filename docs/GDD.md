@@ -115,3 +115,38 @@ This project started as a one-day experiment and has potential for further devel
 ## Conclusion
 
 TownBuilder is a strategy/survival game that combines resource management, town-building, and combat mechanics. With its unique hexagonal grid system and orthographic camera, it offers a fresh take on the genre. The game is currently in its early stages, with potential for significant expansion.
+
+---
+
+## World Generation
+
+### Perlin noise
+
+Perlin noise is a gradient-based noise function commonly used in procedural generation, including world generation for games. It creates smooth, natural-looking variations, making it ideal for generating terrains, textures, and other organic patterns.
+
+How Perlin Noise Works:
+Grid of Gradients: A grid of points is created, and each point is assigned a random gradient vector.
+Interpolation: For any given point in the space, the noise value is calculated by interpolating between the gradients of the surrounding grid points. This ensures smooth transitions.
+Dot Product: The dot product of the gradient vectors and the distance vectors (from the grid points to the given point) is used to determine the influence of each gradient.
+Octaves: To add more detail, multiple layers of Perlin noise (called octaves) are combined. Each octave has a different frequency (scale) and amplitude (intensity).
+Application in World Generation:
+Terrain Heightmaps: Perlin noise can generate height values for a 2D grid, creating hills, valleys, and plains.
+Biomes: By layering Perlin noise, you can define regions like forests, deserts, and mountains.
+Hexagonal Grids: In a hexagonal grid system, Perlin noise can assign values to each hex, such as elevation, temperature, or resource availability.
+Example Visualization:
+Low-frequency noise creates broad, smooth features (e.g., continents).
+High-frequency noise adds finer details (e.g., hills or small islands).
+By tweaking parameters like frequency, amplitude, and octaves, you can control the complexity and appearance of the generated world.
+
+## Process
+
+### End of stream 2025/07/23
+
+- Start of implementation of noise to generate level
+
+TODO:
+
+- Fix raycast to select tiles
+- Gaps between tiles
+  - Maybe do an extra check (a bit like WFC) to correct and fix things on a tile.
+- Change from generating rings to a straight map based on what is visible
