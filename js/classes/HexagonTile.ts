@@ -15,8 +15,6 @@ export class HexagonTile {
      */
     private _object!: Object3D;
 
-    elevation: number = 0;
-
     /**
      * Creates a new HexagonTile instance.
      * @param x - The x-coordinate in cube coordinates.
@@ -28,7 +26,8 @@ export class HexagonTile {
         public x: number,
         public y: number,
         public z: number,
-        public type: TileType = TileType.Grass
+        public type: TileType = TileType.Grass,
+        public elevation: number = 0
     ) {}
 
     /**
