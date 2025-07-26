@@ -17,7 +17,9 @@ import {
     wlUtils,
 } from '@sorskoot/wonderland-components';
 
-import { Tags } from '../../classes/Tags.js';
+import {Tags} from '../../classes/Tags.js';
+import {ChunkManager} from '../../classes/ChunkManager.js';
+import {HexUtils} from '../../classes/HexUtils.js';
 
 const globalConfig = {
     noiseScale: 25,
@@ -26,6 +28,8 @@ const globalConfig = {
     waterLevel: 0.3,
     castleFlattenDistance: 5
 } as const;
+
+const tempVec = vec3.create();
 
 /**
  * Component responsible for managing the hexagonal grid layout.
@@ -52,6 +56,8 @@ export class HexGridLayout extends Component {
     }
     private _myCursor!: MyCursor;
     private _hoveringTile: HexagonTile | null = null;
+    private _chunkManager!: ChunkManager;
+    private _lastPlayerChunk: {q: number; r: number} | null = null;
 
     private static _instance: HexGridLayout;
     static get instance(): HexGridLayout {
@@ -76,8 +82,14 @@ export class HexGridLayout extends Component {
 
         this._myCursor = this.cursorObject.getComponent(MyCursor);
         this.highlight.setScalingLocal([0, 0, 0]);
+
+        // Initialize the grid and chunk manager
+        this._grid = new HexagonGrid();
+        this._chunkManager = new ChunkManager(this._grid, this.object, globalConfig);
+
+        // Create initial area around spawn
         setTimeout(() => {
-            this._createGrid();
+            this._createInitialArea();
         }, 1000); // Temporary delay for initialization
     }
 
@@ -119,7 +131,7 @@ export class HexGridLayout extends Component {
         // Render the tiles.
         const tiles = this._grid.getAllTiles();
         for (const tile of tiles) {
-            const pos = tile.to2D();
+            const pos = HexUtils.to2D(tile);
             let hex: Object3D;
             switch (tile.type) {
                 case TileType.Empty: {
@@ -211,12 +223,14 @@ export class HexGridLayout extends Component {
                         TileType.Empty
                     );
                     this._grid.addTile(newTile);
-                    const pos = newTile.to2D();
-                    const hex = TilePrefabs.instance.spawn(
-                        this._tileMap.get(TileType.Empty)!
-                    );
-                    newTile.object = hex;
-                    hex.setPositionWorld([pos.x, 0, pos.y]);
+
+                    // Check if this tile is in a loaded chunk
+                    const pos = HexUtils.to2D(newTile);
+                    const chunkCoords = this._chunkManager.worldToChunkCoords(pos.x, pos.y);
+                    const chunkId = `${chunkCoords.q},${chunkCoords.r}`;
+
+                    // The chunk manager will render it if the chunk is loaded
+                    this._chunkManager.rerenderTile(newTile);
                 }
             }
         }
@@ -238,7 +252,7 @@ export class HexGridLayout extends Component {
                         neighborCoords.z
                     )
                 ) {
-                    const pos = tile.to2D();
+                    const pos = HexUtils.to2D(tile);
                     let value = Noise.simplex2(
                         pos.x / globalConfig.noiseScale + globalConfig.noiseOffset,
                         pos.y / globalConfig.noiseScale + globalConfig.noiseOffset
@@ -271,13 +285,10 @@ export class HexGridLayout extends Component {
         const tile = this._grid.getTile(tilePos.x, tilePos.y, tilePos.z);
         if (tile && tile.type === TileType.Empty) {
             tile.type = UIState.instance.tileToPlace;
-            tile.object.destroy();
-            const pos = tile.to2D();
-            const hex = TilePrefabs.instance.spawn(
-                this._tileMap.get(UIState.instance.tileToPlace)!
-            );
-            tile.object = hex;
-            hex.setPositionWorld([pos.x, 0, pos.y]);
+
+            // Use chunk manager to re-render the tile
+            this._chunkManager.rerenderTile(tile);
+
             this._addPossibleTargets();
         }
     };
@@ -302,4 +313,49 @@ export class HexGridLayout extends Component {
             //    this.engine.canvas.style.cursor = 'auto';
         }
     };
+
+    public update(dt: number): void {
+        // Get player position and update chunks
+        const playerObj = this.cursorObject.parent!; // Assuming this is the player
+        playerObj.getPositionWorld(tempVec);
+
+        const currentChunk = this._chunkManager.worldToChunkCoords(tempVec[0], tempVec[2]);
+
+        // Only update if player moved to a different chunk
+        if (
+            !this._lastPlayerChunk ||
+            this._lastPlayerChunk.q !== currentChunk.q ||
+            this._lastPlayerChunk.r !== currentChunk.r
+        ) {
+            this._chunkManager.updateLoadedChunks(tempVec);
+            this._lastPlayerChunk = currentChunk;
+        }
+    }
+
+    private _createInitialArea(): void {
+        // Create center tile with castle
+        const center = new HexagonTile(0, 0, 0, TileType.Grass, 0.75);
+        center.addTag('castle');
+        this._grid.addTile(center);
+
+        // Load initial chunks
+        const startPos = vec3.fromValues(0, 0, 0);
+        this._chunkManager.updateLoadedChunks(startPos);
+
+        // Place castle and flatten area
+        const castleTile = this._grid.getTile(0, 0, 0)!;
+        this._flattenNeighborsBFS(castleTile, castleTile.elevation);
+
+        // Render the castle
+        const pos = HexUtils.to2D(castleTile);
+        const hex = TilePrefabs.instance.spawn('TileGrass');
+        hex.setPositionWorld([
+            pos.x,
+            castleTile.elevation * globalConfig.heightScale,
+            pos.y,
+        ]);
+        castleTile.object = hex;
+
+        const castleObject = TilePrefabs.instance.spawn('BuildingCastle', hex);
+    }
 }

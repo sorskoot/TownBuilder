@@ -1,11 +1,7 @@
-import { Object3D } from '@wonderlandengine/api';
-import { TileType } from './TileType.js';
-import { Tags } from './Tags.js';
-
-/**
- * The size of a hexagon tile, calculated based on the hexagon geometry.
- */
-export const TILE_SIZE = 2 / Math.sqrt(3);
+import {Object3D} from '@wonderlandengine/api';
+import {TileType} from './TileType.js';
+import {Tags} from './Tags.js';
+import {TILE_SIZE} from './HexConstants.js';
 
 /**
  * Represents a hexagonal tile in a 3D space using cube coordinates.
@@ -74,56 +70,6 @@ export class HexagonTile {
                 z: this.z + a[2],
             };
         });
-    }
-
-    /**
-     * Converts the cube coordinates of this tile to 2D coordinates.
-     * @returns The 2D position of the tile.
-     */
-    public to2D(): { x: number; y: number } {
-        const x2D = TILE_SIZE * Math.sqrt(3) * (this.x + this.z / 2);
-        const y2D = TILE_SIZE * (3 / 2) * this.z;
-        return { x: x2D, y: y2D };
-    }
-
-    /**
-     * Converts 2D coordinates to cube coordinates and rounds to the nearest hex tile.
-     * @param x2D - The x-coordinate in 2D space.
-     * @param y2D - The y-coordinate in 2D space.
-     * @returns The cube coordinates of the nearest hex tile.
-     */
-    public static from2D(x2D: number, y2D: number): { x: number; y: number; z: number } {
-        const q = ((x2D * Math.sqrt(3)) / 3 - y2D / 3) / TILE_SIZE;
-        const r = (y2D * 2) / 3 / TILE_SIZE;
-        const [x, y, z] = HexagonTile.roundCube(q, -q - r, r);
-        return { x, y, z };
-    }
-
-    /**
-     * Rounds cube coordinates to the nearest hex tile.
-     * @param x - The x-coordinate in cube space.
-     * @param y - The y-coordinate in cube space.
-     * @param z - The z-coordinate in cube space.
-     * @returns The rounded cube coordinates.
-     */
-    public static roundCube(x: number, y: number, z: number): [number, number, number] {
-        let rx = Math.round(x);
-        let ry = Math.round(y);
-        let rz = Math.round(z);
-
-        const xDiff = Math.abs(rx - x);
-        const yDiff = Math.abs(ry - y);
-        const zDiff = Math.abs(rz - z);
-
-        if (xDiff > yDiff && xDiff > zDiff) {
-            rx = -ry - rz;
-        } else if (yDiff > zDiff) {
-            ry = -rx - rz;
-        } else {
-            rz = -rx - ry;
-        }
-
-        return [rx, ry, rz];
     }
 
     public addTag(tag: string): void {
