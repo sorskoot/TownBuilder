@@ -175,18 +175,6 @@ export class MyCursor extends Component {
             this._lastTilePosition = tile;
             this.onTileHover.notify(tile);
         }
-        // const hit = this.engine.physics.rayCast(this._origin, this._direction, 255, 100);
-        // if (hit.hitCount > 0) {
-        //     const tilePos = HexagonTile.from2D(hit.locations[0][0], hit.locations[0][2]);
-        //     if (
-        //         !this._areFloatsEqual(tilePos.x, this._lastTilePosition.x) ||
-        //         !this._areFloatsEqual(tilePos.y, this._lastTilePosition.y) ||
-        //         !this._areFloatsEqual(tilePos.z, this._lastTilePosition.z)
-        //     ) {
-        //         this._lastTilePosition = tilePos;
-        //         this.onTileHover.notify(tilePos);
-        //     }
-        // }
     };
 
     /**
