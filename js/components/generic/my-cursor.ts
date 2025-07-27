@@ -1,7 +1,8 @@
-import {Component, Object3D, ViewComponent, Emitter} from '@wonderlandengine/api';
-import {property} from '@wonderlandengine/api/decorators.js';
-import {vec3, mat4, quat} from 'gl-matrix';
-import {HexagonTile} from '../../classes/HexagonTile.js';
+import { Component, Object3D, ViewComponent, Emitter } from '@wonderlandengine/api';
+import { property } from '@wonderlandengine/api/decorators.js';
+import { vec3, mat4, quat } from 'gl-matrix';
+import { HexagonTile } from '../../classes/HexagonTile.js';
+import { RayCaster } from '../../classes/RayCaster.js';
 
 /**
  * A small epsilon value for float comparison.
@@ -14,16 +15,16 @@ const EPSILON = 0.000001;
 export class MyCursor extends Component {
     static TypeName = 'my-cursor';
 
-    @property.object({required: true})
+    @property.object({ required: true })
     public ray!: Object3D;
 
-    @property.object({required: true})
+    @property.object({ required: true })
     player!: Object3D;
 
-    public onTileHover = new Emitter<[{x: number; y: number; z: number}]>();
-    public onTileClick = new Emitter<[{x: number; y: number; z: number}]>();
+    public onTileHover = new Emitter<[{ x: number; y: number; z: number }]>();
+    public onTileClick = new Emitter<[{ x: number; y: number; z: number }]>();
 
-    private _lastTilePosition: {x: number; y: number; z: number} = {
+    private _lastTilePosition: { x: number; y: number; z: number } = {
         x: 0,
         y: 0,
         z: 0,
@@ -169,18 +170,23 @@ export class MyCursor extends Component {
         this._lastPointerPos[1] = e.clientY;
         this._updateDirection();
 
-        const hit = this.engine.physics.rayCast(this._origin, this._direction, 255, 100);
-        if (hit.hitCount > 0) {
-            const tilePos = HexagonTile.from2D(hit.locations[0][0], hit.locations[0][2]);
-            if (
-                !this._areFloatsEqual(tilePos.x, this._lastTilePosition.x) ||
-                !this._areFloatsEqual(tilePos.y, this._lastTilePosition.y) ||
-                !this._areFloatsEqual(tilePos.z, this._lastTilePosition.z)
-            ) {
-                this._lastTilePosition = tilePos;
-                this.onTileHover.notify(tilePos);
-            }
+        const tile = RayCaster.cast(this._origin, this._direction, 100);
+        if (tile) {
+            this._lastTilePosition = tile;
+            this.onTileHover.notify(tile);
         }
+        // const hit = this.engine.physics.rayCast(this._origin, this._direction, 255, 100);
+        // if (hit.hitCount > 0) {
+        //     const tilePos = HexagonTile.from2D(hit.locations[0][0], hit.locations[0][2]);
+        //     if (
+        //         !this._areFloatsEqual(tilePos.x, this._lastTilePosition.x) ||
+        //         !this._areFloatsEqual(tilePos.y, this._lastTilePosition.y) ||
+        //         !this._areFloatsEqual(tilePos.z, this._lastTilePosition.z)
+        //     ) {
+        //         this._lastTilePosition = tilePos;
+        //         this.onTileHover.notify(tilePos);
+        //     }
+        // }
     };
 
     /**

@@ -1,11 +1,11 @@
-import {Object3D} from '@wonderlandengine/api';
-import {TileType} from './TileType.js';
-import {Tags} from './Tags.js';
+import { Object3D } from '@wonderlandengine/api';
+import { TileType } from './TileType.js';
+import { Tags } from './Tags.js';
 
 /**
  * The size of a hexagon tile, calculated based on the hexagon geometry.
  */
-const TILE_SIZE = 2 / Math.sqrt(3);
+export const TILE_SIZE = 2 / Math.sqrt(3);
 
 /**
  * Represents a hexagonal tile in a 3D space using cube coordinates.
@@ -58,7 +58,7 @@ export class HexagonTile {
      * Calculates the neighboring tiles in cube coordinates.
      * @returns An array of neighboring tiles' cube coordinates.
      */
-    public neighbors(): {x: number; y: number; z: number}[] {
+    public neighbors(): { x: number; y: number; z: number }[] {
         const directions: [number, number, number][] = [
             [1, -1, 0],
             [1, 0, -1],
@@ -80,10 +80,10 @@ export class HexagonTile {
      * Converts the cube coordinates of this tile to 2D coordinates.
      * @returns The 2D position of the tile.
      */
-    public to2D(): {x: number; y: number} {
+    public to2D(): { x: number; y: number } {
         const x2D = TILE_SIZE * Math.sqrt(3) * (this.x + this.z / 2);
         const y2D = TILE_SIZE * (3 / 2) * this.z;
-        return {x: x2D, y: y2D};
+        return { x: x2D, y: y2D };
     }
 
     /**
@@ -92,11 +92,11 @@ export class HexagonTile {
      * @param y2D - The y-coordinate in 2D space.
      * @returns The cube coordinates of the nearest hex tile.
      */
-    public static from2D(x2D: number, y2D: number): {x: number; y: number; z: number} {
+    public static from2D(x2D: number, y2D: number): { x: number; y: number; z: number } {
         const q = ((x2D * Math.sqrt(3)) / 3 - y2D / 3) / TILE_SIZE;
         const r = (y2D * 2) / 3 / TILE_SIZE;
         const [x, y, z] = HexagonTile.roundCube(q, -q - r, r);
-        return {x, y, z};
+        return { x, y, z };
     }
 
     /**
@@ -133,4 +133,10 @@ export class HexagonTile {
     public hasTag(tag: string): boolean {
         return Tags.hasTag(tag, this._id);
     }
+
+    equals(other: HexagonTile): boolean {
+        return this.x === other.x && this.y === other.y && this.z === other.z;
+    }
+
+
 }
