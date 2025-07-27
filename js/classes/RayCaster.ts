@@ -9,7 +9,7 @@ const CurrentPosition = vec3.create();
 
 export class RayCaster {
 
-    public static cast(origin: vec3, direction: vec3, maxDistance: number): { x: number, y: number, z: number } | undefined {
+    public static cast(origin: vec3, direction: vec3, maxDistance: number): TilePosition | undefined {
         const stepSize = TILE_SIZE / STEPS_PER_TILE;
         vec3.normalize(direction, direction); // ensure the direction is normalized
         /*
