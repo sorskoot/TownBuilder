@@ -58,9 +58,10 @@ export class HexGridLayout extends Component {
         return HexGridLayout._instance;
     }
 
+
     init() {
         if (HexGridLayout._instance) {
-            console.error(
+            throw new Error(
                 'There can only be one instance of HexGridLayout Component'
             );
         }
