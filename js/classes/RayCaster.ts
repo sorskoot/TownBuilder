@@ -1,7 +1,9 @@
 import { vec3 } from "gl-matrix";
-import { HexagonTile, TILE_SIZE } from "./HexagonTile.js";
+import { HexagonTile } from "./HexagonTile.js";
 import { UniqueStack } from "../utils/UniqueStack.js";
 import { HexGridLayout } from "../components/core/hex-grid-layout.js";
+import { TILE_SIZE } from "./HexConstants.js";
+import { HexUtils } from "./HexUtils.js";
 
 const TILE_HEIGHT_OFFSET = -1;
 const STEPS_PER_TILE = 4; // Number of steps per tile for ray casting
@@ -59,7 +61,7 @@ export class RayCaster {
         while (currentDistance < maxDistance && !tileFound) {
             currentDistance += stepSize;
             vec3.add(CurrentPosition, CurrentPosition, StepVector); // move the current position in the direction
-            const tilePos = HexagonTile.from2D(CurrentPosition[0], CurrentPosition[2]);
+            const tilePos = HexUtils.from2D(CurrentPosition[0], CurrentPosition[2]);
             if (!tilePos) {
                 continue;
             }
@@ -76,7 +78,7 @@ export class RayCaster {
                     this.getPositionAtElevation(intersectionPoint, actualTileElevation, origin, direction);
 
                     // Verify that the intersection point is still within the same tile
-                    const intersectionTilePos = HexagonTile.from2D(intersectionPoint[0], intersectionPoint[2]);
+                    const intersectionTilePos = HexUtils.from2D(intersectionPoint[0], intersectionPoint[2]);
 
                     if (
                         // we are intersecting with the tile we are above
@@ -101,7 +103,7 @@ export class RayCaster {
                         for (const prevTile of passedTiles.iterateBackwards()) {
                             const prevTileElevation = prevTile.elevation * heightScale;
                             this.getPositionAtElevation(intersectionPoint, prevTileElevation, origin, direction);
-                            const prevIntersectionTilePos = HexagonTile.from2D(intersectionPoint[0], intersectionPoint[2]);
+                            const prevIntersectionTilePos = HexUtils.from2D(intersectionPoint[0], intersectionPoint[2]);
 
                             if (prevIntersectionTilePos &&
                                 prevIntersectionTilePos.x === prevTile.x &&
