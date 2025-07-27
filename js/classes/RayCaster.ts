@@ -37,7 +37,7 @@ export class RayCaster {
 
         vec3.scale(StepVector, direction, stepSize); // each iteration we move this in the direction
         vec3.copy(CurrentPosition, origin); // start at the origin
-        CurrentPosition[1] -= 1; // tiles have a bit of a   height, so we start above the ground
+        CurrentPosition[1] += TILE_HEIGHT_OFFSET; // tiles have a bit of a height, so we start above the ground
         const passedTiles = new UniqueStack<HexagonTile>();
         let currentDistance = 0;
         const layout = HexGridLayout.instance.grid;
