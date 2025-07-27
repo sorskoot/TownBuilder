@@ -3,9 +3,16 @@ import { HexagonTile, TILE_SIZE } from "./HexagonTile.js";
 import { UniqueStack } from "../utils/UniqueStack.js";
 import { HexGridLayout } from "../components/core/hex-grid-layout.js";
 
+const TILE_HEIGHT_OFFSET = -1;
 const STEPS_PER_TILE = 4; // Number of steps per tile for ray casting
 const StepVector = vec3.create();
 const CurrentPosition = vec3.create();
+
+export type TilePosition = {
+    x: number;
+    y: number;
+    z: number;
+};
 
 export class RayCaster {
 
@@ -118,7 +125,8 @@ export class RayCaster {
 
     private static getPositionAtElevation(outVec: vec3, elevation: number, origin: vec3, direction: vec3): void {
         // Calculate the position at a given elevation based on the origin and direction
-        if (direction[1] === 0) {
+        const EPSILON = 1e-6; //TK: Should be moved to constants file when completing chunks refactoring
+        if (Math.abs(direction[1]) < EPSILON) {
             // checking straight up or down, no elevation change possible
             vec3.copy(outVec, origin);
             outVec[1] = elevation; // set the elevation
