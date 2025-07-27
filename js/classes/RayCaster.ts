@@ -3,13 +3,14 @@ import { HexagonTile, TILE_SIZE } from "./HexagonTile.js";
 import { UniqueStack } from "../utils/UniqueStack.js";
 import { HexGridLayout } from "../components/core/hex-grid-layout.js";
 
+const STEPS_PER_TILE = 4; // Number of steps per tile for ray casting
 const StepVector = vec3.create();
 const CurrentPosition = vec3.create();
 
 export class RayCaster {
 
     public static cast(origin: vec3, direction: vec3, maxDistance: number): { x: number, y: number, z: number } | undefined {
-        const stepSize = TILE_SIZE / 4;
+        const stepSize = TILE_SIZE / STEPS_PER_TILE;
         vec3.normalize(direction, direction); // ensure the direction is normalized
         /*
         Plan:
