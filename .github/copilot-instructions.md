@@ -1,14 +1,14 @@
 # Effective Use of TypeScript Features
 
--   Use OOP priciples: make class members as private as possible(encapsulation)
+- Use OOP principles: make class members as private as possible(encapsulation)
 
 ## Code formatting
 
--   use 4 spaces, no tabs
--   Never omit braces, even when it's one line.
--   use `getComponents(MeshComponent)` with a type, instead `getComponents('mesh')` with a string.
--   Use LowerCamelCase for variable, function, and property names: TypeScript is case-sensitive. By convention, use lowerCamelCase for variables, functions, and properties.
--   private variables, functions etc start with an `_`. This is because the private keyword does not exist in JavaScript. The `_` naming convention is common in JavaScript to indicate variables etc are private.
+- use 4 spaces, no tabs
+- Never omit braces, even when it's one line.
+- use `getComponents(MeshComponent)` with a type, instead `getComponents('mesh')` with a string.
+- Use LowerCamelCase for variable, function, and property names: TypeScript is case-sensitive. By convention, use lowerCamelCase for variables, functions, and properties.
+- private variables, functions etc start with an `_`. This is because the private keyword does not exist in JavaScript. The `_` naming convention is common in JavaScript to indicate variables etc are private.
 
 Example:
 
@@ -20,14 +20,14 @@ class MyClass {
 }
 ```
 
--   Use UpperCamelCase (PascalCase) for class names: The first letter of the identifier and the first letter of each subsequent concatenated word are capitalized.
-    Example:
+- Use UpperCamelCase (PascalCase) for class names: The first letter of the identifier and the first letter of each subsequent concatenated word are capitalized.
+  Example:
 
 ```typescript
 class MyAwesomeClass {}
 ```
 
--   The only exception to the casing specified above is when you are using a backing field. In this case, keep the name the same as the property, but start this with an `_`.
+- The only exception to the casing specified above is when you are using a backing field. In this case, keep the name the same as the property, but start this with an `_`.
 
 Example:
 
@@ -39,9 +39,9 @@ get someProperty(): boolean{
 }
 ```
 
--   Avoid logic in getters and setters, except for a null/undefined check, or triggering an onChange type event. Always prefer methods when logic is needed. This way other developers know there won't be any side effects.
--   Use const to declare constants: The 'const' keyword indicates that a variable's value will not be changed after it's defined. Always prefer `const` over `let`.
--   Always use a Type Annotation: Specifying the type can help catch bugs earlier in your development process and enables better tooling. When defining variables, no need to be explicit with types when types can be read from the same line.
+- Avoid logic in getters and setters, except for a null/undefined check, or triggering an onChange type event. Always prefer methods when logic is needed. This way other developers know there won't be any side effects.
+- Use const to declare constants: The 'const' keyword indicates that a variable's value will not be changed after it's defined. Always prefer `const` over `let`.
+- Always use a Type Annotation: Specifying the type can help catch bugs earlier in your development process and enables better tooling. When defining variables, no need to be explicit with types when types can be read from the same line.
 
 Example:
 
@@ -50,20 +50,20 @@ let age: number;
 let minAge = 18;
 ```
 
--   Avoid using `any` Type: Using any type may lead to runtime problems as it doesn't enforce any type-checking
--   Use Template strings instead of concatenation
--   Always specify access modifier for methods and properties
--   Try to avoid using void return types
--   Don't export mutable bindings: This goes in line with the idea that functions should not change state without making it clear in their input/output.
--   Keep lines short (80-100 characters) for readability. We use 92 characters to be specific.
--   Add a space before opening brace { in blocks or control structures
--   Always use triple equals === instead of double equals ==. This ensures that you're checking both value equality AND type equality.
+- Avoid using `any` Type: Using any type may lead to runtime problems as it doesn't enforce any type-checking
+- Use Template strings instead of concatenation
+- Always specify access modifier for methods and properties
+- Try to avoid using void return types
+- Don't export mutable bindings: This goes in line with the idea that functions should not change state without making it clear in their input/output.
+- Keep lines short (80-100 characters) for readability. We use 92 characters to be specific.
+- Add a space before opening brace { in blocks or control structures
+- Always use triple equals === instead of double equals ==. This ensures that you're checking both value equality AND type equality.
 
 ## Wonderland Components
 
--   Always Add and Remove event handlers. Overload the `onActivate` and `onDeactivate` methods from `Component` to make sure everything stays set up correctly.
--   Do not use methods with an event handler, but user Arrow functions assigned to a property.
-    Example:
+- Always Add and Remove event handlers. Overload the `onActivate` and `onDeactivate` methods from `Component` to make sure everything stays set up correctly.
+- Do not use methods with an event handler, but user Arrow functions assigned to a property.
+  Example:
 
 ```typescript
 onActivate(){
@@ -79,18 +79,16 @@ private onSessionStart = (session: XRSession) => {
 }
 ```
 
--   In Start you validate if a property on the component has been set. If not throw an error here. Make sure to include the name of the component in the error and give it a description.
-    In this example, there's a check if the `handL` object has been set. It contains the name of the component and a description of what was expected.
+- In Start you validate if a property on the component has been set. If not throw an error here. Make sure to include the name of the component in the error and give it a description.
+  In this example, there's a check if the `handL` object has been set. It contains the name of the component and a description of what was expected.
 
 ```typescript
 if (!this.handL) {
-    throw new Error(
-        'flashlight: Flashlight needs a reference to the left hand'
-    );
+    throw new Error('flashlight: Flashlight needs a reference to the left hand');
 }
 ```
 
--   NEVER reference to children of components by index directly. The order of children can change at any time, breaking your application. You can either use `findByName` or use a reference. Otherwise, make sure you have another way to be certain that you have the right object. For example, sorting them by name, or adding a simple index component and using that.
+- NEVER reference to children of components by index directly. The order of children can change at any time, breaking your application. You can either use `findByName` or use a reference. Otherwise, make sure you have another way to be certain that you have the right object. For example, sorting them by name, or adding a simple index component and using that.
 
 ❌ Incorrect:
 
@@ -107,16 +105,16 @@ firstChild?:Object3D;
 const someChild = this.firstChild;
 ```
 
--   Don't longer use a global `WL` symbol, but use the API from @wonderlandengine/api instead
--   Create a class that inherits from the API Component class
--   The registration name of the component is now a static property
--   The properties are set on the class, and use a @property decorater. Wonderland properties are always public.
+- Don't longer use a global `WL` symbol, but use the API from @wonderlandengine/api instead
+- Create a class that inherits from the API Component class
+- The registration name of the component is now a static property
+- The properties are set on the class, and use a @property decorator. Wonderland properties are always public.
 
 Example:
 
 ```typescript
-import { Component, Object3D } from '@wonderlandengine/api';
-import { property } from '@wonderlandengine/api/decorators.js';
+import {Component, Object3D} from '@wonderlandengine/api';
+import {property} from '@wonderlandengine/api/decorators.js';
 
 export class SelfDestruct extends Component {
     static TypeName = 'self-destruct';
@@ -135,7 +133,7 @@ export class SelfDestruct extends Component {
 }
 ```
 
--   Mark properties that are required with the correct value in the decorator:
+- Mark properties that are required with the correct value in the decorator:
 
 ```typescript
      @property.texture({required: true})
@@ -148,9 +146,7 @@ Below are some parts of the definitions you should follow when reviewing code.
 
 ```typescript
 export declare const property: {
-    string: (
-        defaultValue?: string | undefined
-    ) => ReturnType<typeof propertyDecorator>;
+    string: (defaultValue?: string | undefined) => ReturnType<typeof propertyDecorator>;
     object: (
         opts?: import('./property.js').PropertyReferenceOptions | undefined
     ) => ReturnType<typeof propertyDecorator>;
@@ -163,15 +159,9 @@ export declare const property: {
         b?: number | undefined,
         a?: number | undefined
     ) => ReturnType<typeof propertyDecorator>;
-    float: (
-        defaultValue?: number | undefined
-    ) => ReturnType<typeof propertyDecorator>;
-    bool: (
-        defaultValue?: boolean | undefined
-    ) => ReturnType<typeof propertyDecorator>;
-    int: (
-        defaultValue?: number | undefined
-    ) => ReturnType<typeof propertyDecorator>;
+    float: (defaultValue?: number | undefined) => ReturnType<typeof propertyDecorator>;
+    bool: (defaultValue?: boolean | undefined) => ReturnType<typeof propertyDecorator>;
+    int: (defaultValue?: number | undefined) => ReturnType<typeof propertyDecorator>;
     enum: (
         values: string[],
         defaultValue?: string | number | undefined
@@ -236,7 +226,7 @@ Prefer adding them to the global or file scope, when they are only used in 1 met
 Only make an exception when the quat or vec is used in multiple places, and then create it on construction or definition.
 This ensures efficient memory usage and better performance.
 
--   **Global Scope Reuse Example**:
+- **Global Scope Reuse Example**:
 
     ```typescript
     const transformPositionVec = vec3.create();

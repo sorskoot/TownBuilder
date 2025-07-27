@@ -44,10 +44,10 @@
                     "type": "orbital-camera",
                     "orbital-camera": {
                         "minElevation": 25.0,
-                        "radial": 200.0,
+                        "radial": 50.0,
                         "mouseButtonIndex": 2,
-                        "maxZoom": 200.0,
-                        "minZoom": 200.0,
+                        "maxZoom": 50.0,
+                        "minZoom": 50.0,
                         "zoomSensitivity": 0.0
                     },
                     "active": false
@@ -65,7 +65,7 @@
                     "type": "zoom",
                     "zoom": {
                         "minZoom": 10,
-                        "maxZoom": 100,
+                        "maxZoom": 45,
                         "defaultZoom": 25
                     }
                 },
@@ -116,12 +116,15 @@
                 {
                     "type": "light",
                     "light": {
-                        "intensity": 9.0,
+                        "intensity": 1.0,
                         "type": "sun",
                         "outerAngle": 120.0,
-                        "shadows": true,
-                        "shadowRange": 100.0,
-                        "innerAngle": 110.0
+                        "shadows": false,
+                        "shadowRange": 250.0,
+                        "innerAngle": 110.0,
+                        "shadowTexelSize": 0.3,
+                        "cascadeCount": 4,
+                        "shadowBias": 0.001
                     }
                 }
             ],
@@ -140,39 +143,6 @@
                 -0.7649072,
                 -0.1853631,
                 0.5631838
-            ],
-            "parent": "9"
-        },
-        "6": {
-            "name": "Light.000",
-            "components": [
-                {
-                    "type": "light",
-                    "light": {
-                        "intensity": 9.0,
-                        "type": "spot",
-                        "shadows": false,
-                        "outerAngle": 120.0,
-                        "innerAngle": 110.0,
-                        "shadowRange": 20.0
-                    }
-                }
-            ],
-            "scaling": [
-                0.9999988,
-                0.9999976,
-                0.9999989
-            ],
-            "translation": [
-                -2.3912231,
-                3.4619092,
-                -3.0973174
-            ],
-            "rotation": [
-                -0.3265219,
-                0.117685,
-                0.3179933,
-                0.8822776
             ],
             "parent": "9"
         },
@@ -658,10 +628,16 @@
                     1.0,
                     1.0,
                     0.0
+                ],
+                "ambientColor": [
+                    0.1181084,
+                    0.1622253,
+                    0.2352941,
+                    1.0
                 ]
             },
             "name": "Hexagons Tiles",
-            "pipeline": "3",
+            "pipeline": "6",
             "Flat": {
                 "flatTexture": "2"
             }
@@ -1093,7 +1069,7 @@
                 "file": "default"
             },
             "features": {
-                "WITH_EMISSIVE": true
+                "WITH_EMISSIVE": false
             },
             "depthFunction": "less or equal"
         },

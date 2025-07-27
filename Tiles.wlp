@@ -397,17 +397,23 @@
                 "file": "assets\\tiles\\hex_grass.gltf"
             },
             "Phong": {
-                "diffuseTexture": null,
+                "diffuseTexture": "2",
                 "shininess": 63,
                 "specularColor": [
                     1.0,
                     1.0,
                     1.0,
                     0.0
+                ],
+                "ambientColor": [
+                    0.2635293,
+                    0.2635293,
+                    0.3294117,
+                    1.0
                 ]
             },
             "name": "Hexagons Tiles",
-            "pipeline": "4",
+            "pipeline": "7",
             "Flat": {
                 "flatTexture": "2"
             }
@@ -600,7 +606,8 @@
             "link": {
                 "name": "Flat Opaque Textured",
                 "file": "default"
-            }
+            },
+            "castShadows": true
         },
         "5": {
             "link": {

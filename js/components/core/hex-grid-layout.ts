@@ -1,12 +1,12 @@
-import {Component, Object3D} from '@wonderlandengine/api';
-import {property} from '@wonderlandengine/api/decorators.js';
-import {HexagonGrid} from '../../classes/HexGrid.js';
-import {HexagonTile} from '../../classes/HexagonTile.js';
-import {TileType} from '../../classes/TileType.js';
-import {TilePrefabs} from './tile-prefabs.js';
-import {MyCursor} from '../generic/my-cursor.js';
-import {vec3} from 'gl-matrix';
-import {UIState} from '../../classes/UIState.js';
+import { Component, Object3D } from '@wonderlandengine/api';
+import { property } from '@wonderlandengine/api/decorators.js';
+import { HexagonGrid } from '../../classes/HexGrid.js';
+import { HexagonTile } from '../../classes/HexagonTile.js';
+import { TileType } from '../../classes/TileType.js';
+import { TilePrefabs } from './tile-prefabs.js';
+import { MyCursor } from '../generic/my-cursor.js';
+import { vec3 } from 'gl-matrix';
+import { UIState } from '../../classes/UIState.js';
 import {
     Easing,
     lerp,
@@ -17,15 +17,15 @@ import {
     wlUtils,
 } from '@sorskoot/wonderland-components';
 
-import {Tags} from '../../classes/Tags.js';
+import { Tags } from '../../classes/Tags.js';
 
 const globalConfig = {
     noiseScale: 25,
     noiseOffset: 0,
     heightScale: 4,
     waterLevel: 0.3,
-    castleFlattenDistance: 5,
-};
+    castleFlattenDistance: 5
+} as const;
 
 /**
  * Component responsible for managing the hexagonal grid layout.
@@ -33,10 +33,10 @@ const globalConfig = {
 export class HexGridLayout extends Component {
     static TypeName = 'hex-grid-layout';
 
-    @property.object({required: true})
+    @property.object({ required: true })
     public cursorObject!: Object3D;
 
-    @property.object({required: true})
+    @property.object({ required: true })
     public highlight!: Object3D;
 
     private _tileMap: Map<TileType, string> = new Map([
@@ -47,8 +47,26 @@ export class HexGridLayout extends Component {
     ]);
 
     private _grid!: HexagonGrid;
+    public get grid(): HexagonGrid {
+        return this._grid;
+    }
     private _myCursor!: MyCursor;
     private _hoveringTile: HexagonTile | null = null;
+
+    private static _instance: HexGridLayout;
+    static get instance(): HexGridLayout {
+        return HexGridLayout._instance;
+    }
+
+
+    init() {
+        if (HexGridLayout._instance) {
+            throw new Error(
+                'There can only be one instance of HexGridLayout Component'
+            );
+        }
+        HexGridLayout._instance = this;
+    }
 
     /**
      * Initializes the component and sets up the grid.
@@ -138,14 +156,14 @@ export class HexGridLayout extends Component {
     }
 
     private _flattenNeighborsBFS(rootTile: HexagonTile, startElevation: number): void {
-        const queue: {tile: HexagonTile; distance: number}[] = [
-            {tile: rootTile, distance: 0},
+        const queue: { tile: HexagonTile; distance: number }[] = [
+            { tile: rootTile, distance: 0 },
         ];
         const visitedTiles = new Set<string>();
         visitedTiles.add(rootTile.id);
 
         while (queue.length > 0) {
-            const {tile, distance} = queue.shift()!;
+            const { tile, distance } = queue.shift()!;
 
             if (distance >= globalConfig.castleFlattenDistance) {
                 continue; // Stop flattening after a certain distance
@@ -164,7 +182,7 @@ export class HexGridLayout extends Component {
 
                 if (neighborTile && !visitedTiles.has(neighborTile.id)) {
                     visitedTiles.add(neighborTile.id);
-                    queue.push({tile: neighborTile, distance: distance + 1});
+                    queue.push({ tile: neighborTile, distance: distance + 1 });
                 }
             }
         }
@@ -232,7 +250,7 @@ export class HexGridLayout extends Component {
                         neighborCoords.z,
                         value > globalConfig.waterLevel ? TileType.Grass : TileType.Water,
                         Mathf.clamp(value, globalConfig.waterLevel, 1) -
-                            globalConfig.waterLevel
+                        globalConfig.waterLevel
                     );
 
                     this._grid.addTile(newTile);
@@ -246,7 +264,7 @@ export class HexGridLayout extends Component {
     /**
      * Handles tile click events.
      */
-    private _onTileClick = (tilePos: {x: number; y: number; z: number}): void => {
+    private _onTileClick = (tilePos: { x: number; y: number; z: number }): void => {
         if (!this._grid) {
             return;
         }
@@ -267,7 +285,7 @@ export class HexGridLayout extends Component {
     /**
      * Handles tile hover events.
      */
-    private _onTileHover = (tilePos: {x: number; y: number; z: number}): void => {
+    private _onTileHover = (tilePos: { x: number; y: number; z: number }): void => {
         if (!this._grid) {
             return;
         }
