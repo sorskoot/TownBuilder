@@ -1004,6 +1004,9 @@
             "environment": {
                 "bakingMode": "sky",
                 "material": "5"
+            },
+            "bloom": {
+                "enabled": true
             }
         },
         "runtime": {

@@ -17,9 +17,9 @@ import {
     wlUtils,
 } from '@sorskoot/wonderland-components';
 
-import {Tags} from '../../classes/Tags.js';
-import {ChunkManager} from '../../classes/ChunkManager.js';
-import {HexUtils} from '../../classes/HexUtils.js';
+import { Tags } from '../../classes/Tags.js';
+import { ChunkManager } from '../../classes/ChunkManager.js';
+import { HexUtils } from '../../classes/HexUtils.js';
 
 const globalConfig = {
     noiseScale: 25,
@@ -57,7 +57,8 @@ export class HexGridLayout extends Component {
     private _myCursor!: MyCursor;
     private _hoveringTile: HexagonTile | null = null;
     private _chunkManager!: ChunkManager;
-    private _lastPlayerChunk: {q: number; r: number} | null = null;
+    private _lastPlayerChunk: { q: number; r: number } | null = null;
+    private _ready = false;
 
     private static _instance: HexGridLayout;
     static get instance(): HexGridLayout {
@@ -85,11 +86,13 @@ export class HexGridLayout extends Component {
 
         // Initialize the grid and chunk manager
         this._grid = new HexagonGrid();
-        this._chunkManager = new ChunkManager(this._grid, this.object, globalConfig);
+        //this._chunkManager = new ChunkManager(this._grid, this.object, globalConfig);
 
         // Create initial area around spawn
         setTimeout(() => {
-            this._createInitialArea();
+            //   this._createInitialArea();
+            this._createGrid();
+            this._ready = true;
         }, 1000); // Temporary delay for initialization
     }
 
@@ -226,11 +229,11 @@ export class HexGridLayout extends Component {
 
                     // Check if this tile is in a loaded chunk
                     const pos = HexUtils.to2D(newTile);
-                    const chunkCoords = this._chunkManager.worldToChunkCoords(pos.x, pos.y);
-                    const chunkId = `${chunkCoords.q},${chunkCoords.r}`;
+                    //const chunkCoords = this._chunkManager.worldToChunkCoords(pos.x, pos.y);
+                    //  const chunkId = `${chunkCoords.q},${chunkCoords.r}`;
 
                     // The chunk manager will render it if the chunk is loaded
-                    this._chunkManager.rerenderTile(newTile);
+                    //this._chunkManager.rerenderTile(newTile);
                 }
             }
         }
@@ -287,7 +290,7 @@ export class HexGridLayout extends Component {
             tile.type = UIState.instance.tileToPlace;
 
             // Use chunk manager to re-render the tile
-            this._chunkManager.rerenderTile(tile);
+            //     this._chunkManager.rerenderTile(tile);
 
             this._addPossibleTargets();
         }
@@ -315,21 +318,25 @@ export class HexGridLayout extends Component {
     };
 
     public update(dt: number): void {
+        if (!this._ready) {
+            return;
+        }
+
         // Get player position and update chunks
         const playerObj = this.cursorObject.parent!; // Assuming this is the player
         playerObj.getPositionWorld(tempVec);
 
-        const currentChunk = this._chunkManager.worldToChunkCoords(tempVec[0], tempVec[2]);
+        // const currentChunk = this._chunkManager.worldToChunkCoords(tempVec[0], tempVec[2]);
 
         // Only update if player moved to a different chunk
-        if (
-            !this._lastPlayerChunk ||
-            this._lastPlayerChunk.q !== currentChunk.q ||
-            this._lastPlayerChunk.r !== currentChunk.r
-        ) {
-            this._chunkManager.updateLoadedChunks(tempVec);
-            this._lastPlayerChunk = currentChunk;
-        }
+        // if (
+        //     !this._lastPlayerChunk ||
+        //     this._lastPlayerChunk.q !== currentChunk.q ||
+        //     this._lastPlayerChunk.r !== currentChunk.r
+        // ) {
+        //    // this._chunkManager.updateLoadedChunks(tempVec);
+        //     this._lastPlayerChunk = currentChunk;
+        // }
     }
 
     private _createInitialArea(): void {
@@ -340,7 +347,7 @@ export class HexGridLayout extends Component {
 
         // Load initial chunks
         const startPos = vec3.fromValues(0, 0, 0);
-        this._chunkManager.updateLoadedChunks(startPos);
+        //this._chunkManager.updateLoadedChunks(startPos);
 
         // Place castle and flatten area
         const castleTile = this._grid.getTile(0, 0, 0)!;

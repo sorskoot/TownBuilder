@@ -2,55 +2,51 @@ import { HexagonTile } from './HexagonTile.js';
 import { Object3D } from '@wonderlandengine/api';
 
 export class HexChunk {
-    private _tiles: Map<string, HexagonTile> = new Map();
+    private _centerQ: number;
+    private _centerR: number;
+    private _centerS: number;
+    private _chunkRadius: number;
 
-    private _isLoaded: boolean = false;
-    private _chunkRoot: Object3D | null = null;
+    public tiles: Map<string, HexagonTile> = new Map();
+    public isLoaded: boolean = false;
+    public chunkRoot: Object3D | null = null;
 
-    constructor(private _centerX: number, private _centerY: number, private _centerZ: number, private _chunkRadius: number) {
+    constructor(centerQ: number, centerS: number, centerR: number, radius: number) {
+        this._centerQ = centerQ;
+        this._centerS = centerS;
+        this._centerR = centerR;
+        this._chunkRadius = radius;
 
+        // Verify cube coordinate constraint
+        if (this._centerQ + this._centerR + this._centerS !== 0) {
+            throw new Error('HexChunk: Invalid cube coordinates - q + r + s must equal 0');
+        }
     }
 
     get id(): string {
-        return `C${this._centerX},${this._centerY},${this._centerZ}`;
-    }
-
-    get isLoaded(): boolean {
-        return this._isLoaded;
-    }
-
-    get tiles(): Map<string, HexagonTile> {
-        return this._tiles;
-    }
-
-    get chunkRoot(): Object3D | null {
-        return this._chunkRoot;
-    }
-
-    set chunkRoot(root: Object3D | null) {
-        this._chunkRoot = root;
+        return `${this._centerQ},${this._centerR},${this._centerS}`;
     }
 
     containsTile(q: number, r: number): boolean {
         const s = -q - r;
         const distance = Math.max(
-            Math.abs(q - this._centerX),
-            Math.abs(r - this._centerY),
-            Math.abs(s - (-this._centerX - this._centerY))
+            Math.abs(q - this._centerQ),
+            Math.abs(r - this._centerR),
+            Math.abs(s - (-this._centerQ - this._centerR))
         );
         return distance <= this._chunkRadius;
     }
 
     load(): void {
-        this._isLoaded = true;
+        this.isLoaded = true;
     }
 
     unload(): void {
-        this._isLoaded = false;
-        this._tiles.clear();
-        if (this._chunkRoot) {
-            this._chunkRoot.destroy();
-            this._chunkRoot = null;
+        this.isLoaded = false;
+        this.tiles.clear();
+        if (this.chunkRoot) {
+            this.chunkRoot.destroy();
+            this.chunkRoot = null;
         }
     }
 }
