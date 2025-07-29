@@ -19,14 +19,24 @@ import {
 
 import { Tags } from '../../classes/Tags.js';
 import { GameCore } from '../../classes/core/GameCore.js';
+import { ResourcePrefabs } from './resource-prefabs.ts';
 
 const globalConfig = {
     noiseScale: 25,
     noiseOffset: 0,
     heightScale: 4,
     waterLevel: 0.3,
-    castleFlattenDistance: 5
+    castleFlattenDistance: 5,
+
+    treeNoiseScale: 5,
+    treeNoiseOffset: 0,
+    treeThreshold: 0.6,
+    treeSparseThreshold: 0.5,
+
+    rockThreshold: 0.3
 } as const;
+
+const orientations = [0, 60, 120, 180, 240, 300];
 
 /**
  * Component responsible for managing the hexagonal grid layout.
@@ -115,11 +125,30 @@ export class HexGridLayout extends Component {
         // flatten around castle
         this._flattenNeighborsBFS(center, center.elevation);
 
-        // Wave Function Collapse:
-        // loop and loop and loop until all tiles are settled.
+        const tiles = this._grid.getAllTiles();
+
+        // Add trees
+        for (const tile of tiles) {
+            if (tile.type === TileType.Grass && !tile.hasTag('castle')) {
+                const pos = tile.to2D();
+                let value = Noise.perlin2(
+                    pos.x / globalConfig.treeNoiseScale + globalConfig.treeNoiseOffset,
+                    pos.y / globalConfig.treeNoiseScale + globalConfig.treeNoiseOffset
+                );
+                value = (value + 1) / 2; // Normalize to [0, 1]
+                if (value > globalConfig.treeThreshold) {
+                    tile.addTag('treeDense');
+                } else if (value > globalConfig.treeSparseThreshold) {
+                    tile.addTag('treeSparse');
+                } else if (value < globalConfig.rockThreshold) {
+                    tile.addTag('rock');
+                }
+                // const tree = TilePrefabs.instance.spawn('ResourceTree')!;
+                // tree.setPositionWorld(tile.to2D());
+            }
+        }
 
         // Render the tiles.
-        const tiles = this._grid.getAllTiles();
         for (const tile of tiles) {
             const pos = tile.to2D();
             let hex: Object3D;
@@ -143,6 +172,19 @@ export class HexGridLayout extends Component {
                     ]);
                     break;
                 }
+            }
+            if (tile.hasTag('treeDense')) {
+                const tree = ResourcePrefabs.instance.spawn('ResourceTreeDense')!;
+                tree.rotateAxisAngleDegLocal([0, 1, 0], rng.getItem(orientations));
+                tree.setPositionWorld([pos.x, tile.elevation * globalConfig.heightScale, pos.y]);
+            } else if (tile.hasTag('treeSparse')) {
+                const tree = ResourcePrefabs.instance.spawn('ResourceTreeSparse')!;
+                tree.rotateAxisAngleDegLocal([0, 1, 0], rng.getItem(orientations));
+                tree.setPositionWorld([pos.x, tile.elevation * globalConfig.heightScale, pos.y]);
+            } else if (tile.hasTag('rock')) {
+                const rock = ResourcePrefabs.instance.spawn('ResourceRock')!;
+                rock.rotateAxisAngleDegLocal([0, 1, 0], rng.getItem(orientations));
+                rock.setPositionWorld([pos.x, tile.elevation * globalConfig.heightScale, pos.y]);
             }
             tile.object = hex;
         }

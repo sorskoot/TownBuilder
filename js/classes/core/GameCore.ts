@@ -1,7 +1,8 @@
 import { RetainEmitter, WonderlandEngine } from "@wonderlandengine/api";
 
 export enum AssetsToLoad {
-    TilePrefabs
+    TilePrefabs,
+    ResourcePrefabs
 }
 
 export class GameCore {
@@ -11,7 +12,8 @@ export class GameCore {
     public onLoaded = new RetainEmitter();
 
     private _assetsToLoad: Map<AssetsToLoad, boolean> = new Map([
-        [AssetsToLoad.TilePrefabs, false]
+        [AssetsToLoad.TilePrefabs, false],
+        [AssetsToLoad.ResourcePrefabs, false]
     ]);
 
     static get instance(): GameCore {
