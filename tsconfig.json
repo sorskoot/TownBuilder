@@ -1,17 +1,17 @@
 {
     "compilerOptions": {
         "target": "es2022",
-        "module": "nodenext",
+        "module": "NodeNext",
         "resolveJsonModule": true,
-        "moduleResolution": "nodenext",
+        "moduleResolution": "NodeNext",
         "experimentalDecorators": true,
+        "allowImportingTsExtensions": true,
         "jsx": "react-jsx",
-
-        //"allowJs": true,
-        //"strict": true,
-
+        "noEmit": true,
+        "allowJs": false,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
         "emitDecoratorMetadata": true,
-
         "typeRoots": ["./node_modules/@types", "js/types/materials.d.ts"]
     },
     "exclude": ["node_modules", "dist"],

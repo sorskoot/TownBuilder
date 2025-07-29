@@ -345,6 +345,14 @@
                 0.0,
                 0.0
             ]
+        },
+        "18": {
+            "name": "Core",
+            "components": [
+                {
+                    "type": "game-core-component"
+                }
+            ]
         }
     },
     "meshes": {
@@ -981,7 +989,8 @@
                     "js/ui",
                     "js/components",
                     "js/utils"
-                ]
+                ],
+                "entryPoint": "js/index.ts"
             },
             "libraryPaths": [
                 "/js/lib/"
