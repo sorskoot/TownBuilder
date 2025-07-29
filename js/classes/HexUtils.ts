@@ -23,6 +23,7 @@ export class HexUtils {
             z = tileOrX.z;
         } else {
             x = tileOrX;
+            z = z ?? 0; // Default z to 0 if not provided
         }
 
         const x2D = TILE_SIZE * Math.sqrt(3) * (x + z! / 2);
