@@ -8,8 +8,8 @@ export class GameCoreComponent extends Component {
     static TypeName = 'game-core-component';
 
     start() {
-        TilePrefabs.instance.onPrefabsLoaded.add(this._onTilePrefabsLoaded)
-        ResourcePrefabs.instance.onPrefabsLoaded.add(this._onResourcePrefabsLoaded)
+        TilePrefabs.instance.onPrefabsLoaded.add(this._onTilePrefabsLoaded);
+        ResourcePrefabs.instance.onPrefabsLoaded.add(this._onResourcePrefabsLoaded);
     }
 
     private _onTilePrefabsLoaded = () => {
