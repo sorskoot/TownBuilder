@@ -1,5 +1,10 @@
 # TODO TownBuilder
 
+@today Plan for today:
+    ✔ Implement basic Game-Manager @done(25-07-29 22:06)
+    ☐ Add more tile variation
+    ☐ Improve world generation
+
 Bugs:
     ✔ ui doesn't show @critical @done(25-07-22 21:52)
     The Z of the UI is set to -500, is that correct?

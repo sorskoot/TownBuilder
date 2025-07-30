@@ -18,14 +18,25 @@ import {
 } from '@sorskoot/wonderland-components';
 
 import { Tags } from '../../classes/Tags.js';
+import { GameCore } from '../../classes/core/GameCore.js';
+import { ResourcePrefabs } from './resource-prefabs.ts';
 
 const globalConfig = {
     noiseScale: 25,
     noiseOffset: 0,
     heightScale: 4,
     waterLevel: 0.3,
-    castleFlattenDistance: 5
+    castleFlattenDistance: 5,
+
+    treeNoiseScale: 5,
+    treeNoiseOffset: 0,
+    treeThreshold: 0.6,
+    treeSparseThreshold: 0.5,
+
+    rockThreshold: 0.3
 } as const;
+
+const orientations = [0, 60, 120, 180, 240, 300];
 
 /**
  * Component responsible for managing the hexagonal grid layout.
@@ -58,7 +69,6 @@ export class HexGridLayout extends Component {
         return HexGridLayout._instance;
     }
 
-
     init() {
         if (HexGridLayout._instance) {
             throw new Error(
@@ -74,11 +84,9 @@ export class HexGridLayout extends Component {
     public start(): void {
         Noise.seed(Date.now());
 
-        this._myCursor = this.cursorObject.getComponent(MyCursor);
+        this._myCursor = this.cursorObject.getComponent(MyCursor)!;
         this.highlight.setScalingLocal([0, 0, 0]);
-        setTimeout(() => {
-            this._createGrid();
-        }, 1000); // Temporary delay for initialization
+        GameCore.instance.onLoaded.add(this._onGameLoaded);
     }
 
     /**
@@ -97,6 +105,10 @@ export class HexGridLayout extends Component {
         this._myCursor.onTileClick.remove(this._onTileClick);
     }
 
+    private _onGameLoaded = () => {
+        this._createGrid();
+    }
+
     /**
      * Creates the hexagonal grid and populates it with tiles.
      */
@@ -113,27 +125,46 @@ export class HexGridLayout extends Component {
         // flatten around castle
         this._flattenNeighborsBFS(center, center.elevation);
 
-        // Wave Function Collapse:
-        // loop and loop and loop until all tiles are settled.
+        const tiles = this._grid.getAllTiles();
+
+        // Add trees
+        for (const tile of tiles) {
+            if (tile.type === TileType.Grass && !tile.hasTag('castle')) {
+                const pos = tile.to2D();
+                let value = Noise.perlin2(
+                    pos.x / globalConfig.treeNoiseScale + globalConfig.treeNoiseOffset,
+                    pos.y / globalConfig.treeNoiseScale + globalConfig.treeNoiseOffset
+                );
+                value = (value + 1) / 2; // Normalize to [0, 1]
+                if (value > globalConfig.treeThreshold) {
+                    tile.addTag('treeDense');
+                } else if (value > globalConfig.treeSparseThreshold) {
+                    tile.addTag('treeSparse');
+                } else if (value < globalConfig.rockThreshold) {
+                    tile.addTag('rock');
+                }
+                // const tree = TilePrefabs.instance.spawn('ResourceTree')!;
+                // tree.setPositionWorld(tile.to2D());
+            }
+        }
 
         // Render the tiles.
-        const tiles = this._grid.getAllTiles();
         for (const tile of tiles) {
             const pos = tile.to2D();
             let hex: Object3D;
             switch (tile.type) {
                 case TileType.Empty: {
-                    hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Empty)!);
+                    hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Empty)!)!;
                     hex.setPositionWorld([pos.x, -0.25, pos.y]);
                     break;
                 }
                 case TileType.Water: {
-                    hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Water)!);
+                    hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Water)!)!;
                     hex.setPositionWorld([pos.x, -0.25, pos.y]);
                     break;
                 }
                 default: {
-                    hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Grass)!);
+                    hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Grass)!)!;
                     hex.setPositionWorld([
                         pos.x,
                         tile.elevation * globalConfig.heightScale,
@@ -142,12 +173,29 @@ export class HexGridLayout extends Component {
                     break;
                 }
             }
+            if (tile.hasTag('treeDense')) {
+                const tree = ResourcePrefabs.instance.spawn('ResourceTreeDense')!;
+                tree.rotateAxisAngleDegLocal([0, 1, 0], rng.getItem(orientations));
+                tree.setPositionWorld([pos.x, tile.elevation * globalConfig.heightScale, pos.y]);
+            } else if (tile.hasTag('treeSparse')) {
+                const tree = ResourcePrefabs.instance.spawn('ResourceTreeSparse')!;
+                tree.rotateAxisAngleDegLocal([0, 1, 0], rng.getItem(orientations));
+                tree.setPositionWorld([pos.x, tile.elevation * globalConfig.heightScale, pos.y]);
+            } else if (tile.hasTag('rock')) {
+                const rock = ResourcePrefabs.instance.spawn('ResourceRock')!;
+                rock.rotateAxisAngleDegLocal([0, 1, 0], rng.getItem(orientations));
+                rock.setPositionWorld([pos.x, tile.elevation * globalConfig.heightScale, pos.y]);
+            }
             tile.object = hex;
         }
 
         // Add Castle
         const castleTileID = Tags.getTilesWithTag('castle')[0];
         const castleTile = this._grid.getTileById(castleTileID);
+        if (!castleTile) {
+            throw new Error('Castle tile not found in the grid. The castle is probably not created.');
+        }
+
         const castleObject = TilePrefabs.instance.spawn(
             'BuildingCastle',
             castleTile.object
@@ -214,7 +262,7 @@ export class HexGridLayout extends Component {
                     const pos = newTile.to2D();
                     const hex = TilePrefabs.instance.spawn(
                         this._tileMap.get(TileType.Empty)!
-                    );
+                    )!;
                     newTile.object = hex;
                     hex.setPositionWorld([pos.x, 0, pos.y]);
                 }
@@ -275,7 +323,7 @@ export class HexGridLayout extends Component {
             const pos = tile.to2D();
             const hex = TilePrefabs.instance.spawn(
                 this._tileMap.get(UIState.instance.tileToPlace)!
-            );
+            )!;
             tile.object = hex;
             hex.setPositionWorld([pos.x, 0, pos.y]);
             this._addPossibleTargets();

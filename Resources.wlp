@@ -4,7 +4,7 @@
             "main": "TownBuilder.wlp"
         },
         "project": {
-            "name": "Tiles",
+            "name": "Resources",
             "prefab": true,
             "version": [
                 1,
@@ -47,6 +47,36 @@
         },
         "5": {
             "fileName": "assets/tiles/building_castle_blue.gltf",
+            "importerName": "",
+            "importPhysicalAsPhongMaterials": true
+        },
+        "6": {
+            "fileName": "assets/tiles/trees_A_large.gltf",
+            "importerName": "",
+            "importPhysicalAsPhongMaterials": true
+        },
+        "7": {
+            "fileName": "assets/tiles/trees_A_small.gltf",
+            "importerName": "",
+            "importPhysicalAsPhongMaterials": true
+        },
+        "8": {
+            "fileName": "assets/tiles/trees_A_medium.gltf",
+            "importerName": "",
+            "importPhysicalAsPhongMaterials": true
+        },
+        "9": {
+            "fileName": "assets/tiles/rock_single_A.gltf",
+            "importerName": "",
+            "importPhysicalAsPhongMaterials": true
+        },
+        "10": {
+            "fileName": "assets/tiles/rock_single_B.gltf",
+            "importerName": "",
+            "importPhysicalAsPhongMaterials": true
+        },
+        "11": {
+            "fileName": "assets/tiles/rock_single_C.gltf",
             "importerName": "",
             "importPhysicalAsPhongMaterials": true
         }
@@ -349,6 +379,42 @@
                 "name": "building_castle_blue",
                 "file": "assets\\tiles\\building_castle_blue.gltf"
             }
+        },
+        "5": {
+            "link": {
+                "name": "trees_A_large",
+                "file": "assets\\tiles\\trees_A_large.gltf"
+            }
+        },
+        "6": {
+            "link": {
+                "name": "trees_A_small",
+                "file": "assets\\tiles\\trees_A_small.gltf"
+            }
+        },
+        "7": {
+            "link": {
+                "name": "trees_A_medium",
+                "file": "assets\\tiles\\trees_A_medium.gltf"
+            }
+        },
+        "8": {
+            "link": {
+                "name": "rock_single_A",
+                "file": "assets\\tiles\\rock_single_A.gltf"
+            }
+        },
+        "9": {
+            "link": {
+                "name": "rock_single_B",
+                "file": "assets\\tiles\\rock_single_B.gltf"
+            }
+        },
+        "10": {
+            "link": {
+                "name": "rock_single_C",
+                "file": "assets\\tiles\\rock_single_C.gltf"
+            }
         }
     },
     "morphTargets": {},
@@ -357,8 +423,7 @@
             "link": {
                 "name": "texture_0",
                 "file": "assets\\tiles\\hex_grass.gltf"
-            },
-            "image": "1"
+            }
         },
         "2": {
             "link": {
@@ -383,6 +448,42 @@
                 "name": "texture_0",
                 "file": "assets\\tiles\\building_castle_blue.gltf"
             }
+        },
+        "6": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\tiles\\trees_A_large.gltf"
+            }
+        },
+        "7": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\tiles\\trees_A_small.gltf"
+            }
+        },
+        "8": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\tiles\\trees_A_medium.gltf"
+            }
+        },
+        "9": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\tiles\\rock_single_A.gltf"
+            }
+        },
+        "10": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\tiles\\rock_single_B.gltf"
+            }
+        },
+        "11": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\tiles\\rock_single_C.gltf"
+            }
         }
     },
     "materials": {
@@ -398,26 +499,22 @@
                 "file": "assets\\tiles\\hex_grass.gltf"
             },
             "Phong": {
-                "diffuseTexture": "2",
+                "ambientColor": [
+                    0.2635293,
+                    0.2635293,
+                    0.3294117,
+                    1.0
+                ],
                 "shininess": 63,
                 "specularColor": [
                     1.0,
                     1.0,
                     1.0,
                     0.0
-                ],
-                "ambientColor": [
-                    0.2635293,
-                    0.2635293,
-                    0.3294117,
-                    1.0
                 ]
             },
             "name": "Hexagons Tiles",
-            "pipeline": "7",
-            "Flat": {
-                "flatTexture": "2"
-            }
+            "Flat": {}
         },
         "3": {
             "link": {
@@ -435,87 +532,88 @@
             "link": {
                 "name": "hexagons_medieval",
                 "file": "assets\\tiles\\building_castle_blue.gltf"
+            },
+            "Phong": {
+                "diffuseTexture": "2",
+                "ambientColor": [
+                    0.2635293,
+                    0.2635293,
+                    0.3294117,
+                    1.0
+                ]
+            }
+        },
+        "6": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\trees_A_large.gltf"
+            }
+        },
+        "7": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\trees_A_small.gltf"
+            }
+        },
+        "8": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\trees_A_medium.gltf"
+            }
+        },
+        "9": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\rock_single_A.gltf"
+            }
+        },
+        "10": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\rock_single_B.gltf"
+            }
+        },
+        "11": {
+            "link": {
+                "name": "hexagons_medieval",
+                "file": "assets\\tiles\\rock_single_C.gltf"
             }
         }
     },
     "objects": {
-        "1": {
-            "name": "TileGrass"
+        "10": {
+            "name": "ResourceTreeDense"
         },
-        "2": {
+        "11": {
             "link": {
-                "name": "hex_grass",
-                "file": "assets\\tiles\\hex_grass.gltf"
+                "name": "trees_A_large",
+                "file": "assets\\tiles\\trees_A_large.gltf"
             },
-            "parent": "1",
+            "parent": "9",
             "components": [
                 {
-                    "type": "mesh",
+                    "originalIndex": 0,
                     "mesh": {
-                        "material": "2",
-                        "mesh": "1"
+                        "material": "5"
                     }
                 }
-            ]
-        },
-        "3": {
-            "link": {
-                "name": "hex_water",
-                "file": "assets\\tiles\\hex_water.gltf"
-            },
-            "parent": "4",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "material": "2",
-                        "mesh": "2"
-                    }
-                }
-            ]
-        },
-        "4": {
-            "name": "TileWater",
-            "translation": [
-                3.0,
-                0.0,
-                0.0
+            ],
+            "scaling": [
+                1.0,
+                1.0,
+                1.0
             ],
             "rotation": [
                 0.0,
                 0.0,
                 0.0,
                 1.0
-            ],
-            "scaling": [
-                1.0,
-                1.0,
-                1.0
             ]
         },
-        "5": {
-            "name": "TileEmpty",
+        "9": {
+            "name": "ResourceTreeSparse",
             "translation": [
-                -3.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scaling": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "6": {
-            "name": "TileRoad",
-            "translation": [
-                -2.5,
+                -2.0,
                 0.0,
                 0.0
             ],
@@ -533,14 +631,36 @@
         },
         "7": {
             "link": {
-                "name": "hex_road_A",
-                "file": "assets\\tiles\\hex_road_A.gltf"
+                "name": "trees_A_medium",
+                "file": "assets\\tiles\\trees_A_medium.gltf"
             },
-            "parent": "6",
+            "parent": "10",
+            "components": [
+                {
+                    "originalIndex": 0,
+                    "mesh": {
+                        "material": "5"
+                    }
+                }
+            ],
+            "scaling": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "8": {
+            "name": "ResourceRock",
             "translation": [
                 0.0,
                 0.0,
-                0.0
+                1.5
             ],
             "rotation": [
                 0.0,
@@ -552,33 +672,119 @@
                 1.0,
                 1.0,
                 1.0
-            ],
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "material": "2",
-                        "mesh": "3"
-                    }
-                }
             ]
         },
-        "8": {
-            "name": "BuildingCastle"
-        },
-        "9": {
+        "6": {
             "link": {
-                "name": "building_castle_blue",
-                "file": "assets\\tiles\\building_castle_blue.gltf"
+                "name": "rock_single_A",
+                "file": "assets\\tiles\\rock_single_A.gltf"
             },
             "parent": "8",
             "components": [
                 {
                     "originalIndex": 0,
                     "mesh": {
-                        "material": "2"
+                        "material": "5"
                     }
                 }
+            ],
+            "translation": [
+                0.4223404,
+                0.0,
+                -0.3628538
+            ],
+            "rotation": [
+                7.14395369527665e-8,
+                -0.2401743,
+                0.0,
+                0.9707297
+            ],
+            "scaling": [
+                1.7999998,
+                1.7999999,
+                1.7999998
+            ]
+        },
+        "5": {
+            "link": {
+                "name": "rock_single_B",
+                "file": "assets\\tiles\\rock_single_B.gltf"
+            },
+            "parent": "8",
+            "components": [
+                {
+                    "originalIndex": 0,
+                    "mesh": {
+                        "material": "5"
+                    }
+                }
+            ],
+            "translation": [
+                -0.1011257,
+                0.0,
+                0.1189708
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scaling": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "4": {
+            "link": {
+                "name": "rock_single_C",
+                "file": "assets\\tiles\\rock_single_C.gltf"
+            },
+            "parent": "8",
+            "components": [
+                {
+                    "originalIndex": 0,
+                    "mesh": {
+                        "material": "5"
+                    }
+                }
+            ],
+            "translation": [
+                -0.3858419,
+                0.0,
+                0.0832777
+            ],
+            "rotation": [
+                0.0,
+                -0.151779,
+                0.0,
+                0.9884144
+            ],
+            "scaling": [
+                1.5799988,
+                1.5799999,
+                1.5799988
+            ]
+        },
+        "3": {
+            "link": {
+                "name": "hex_grass",
+                "file": "assets\\tiles\\hex_grass.gltf"
+            },
+            "name": "hex_grass for reference",
+            "components": [
+                {
+                    "originalIndex": 0,
+                    "mesh": {
+                        "material": "5"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                1.5
             ]
         }
     },
