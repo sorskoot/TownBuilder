@@ -1,9 +1,8 @@
 # TODO TownBuilder
 
 @today Plan for today:
-    ✔ Implement basic Game-Manager @done(25-07-29 22:06)
-    ☐ Add more tile variation
     ☐ Improve world generation
+        Copy the basics from the other game and convert the current system to individual steps
 
 Bugs:
     ✔ ui doesn't show @critical @done(25-07-22 21:52)

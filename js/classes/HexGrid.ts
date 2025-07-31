@@ -1,10 +1,11 @@
-import {HexagonTile} from './HexagonTile.js';
-import {TileType} from './TileType.js';
+import { Cloneable } from './generator/core/Cloneable.ts';
+import { HexagonTile } from './HexagonTile.js';
+import { TileType } from './TileType.js';
 
 /**
  * Represents a grid of hexagonal tiles.
  */
-export class HexagonGrid {
+export class HexagonGrid implements Cloneable<HexagonGrid> {
     /**
      * A map storing hexagon tiles with their unique keys.
      */
@@ -15,6 +16,11 @@ export class HexagonGrid {
      */
     constructor() {
         this._tiles = new Map();
+    }
+
+    clone(): HexagonGrid {
+        console.warn('NOT REALLY CLONING THE GRID');
+        return this;
     }
 
     /**
