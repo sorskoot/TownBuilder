@@ -1,4 +1,4 @@
-import {HexagonTile} from './HexagonTile.js';
+import { HexagonTile } from './HexagonTile.js';
 
 export class Tags {
     private static _instance: Tags;
@@ -12,7 +12,7 @@ export class Tags {
         return Tags._instance;
     }
 
-    private constructor() {}
+    private constructor() { }
 
     static setTag(tag: string, hexagonTileID: string): void {
         const instance = Tags.instance;
@@ -62,5 +62,9 @@ export class Tags {
     static getTilesWithTag(tag: string): string[] {
         const instance = Tags.instance;
         return Array.from(instance._tagList.get(tag) || []);
+    }
+
+    static getTileWithTag(tag: string): string | undefined {
+        return Tags.getTilesWithTag(tag)[0];
     }
 }
