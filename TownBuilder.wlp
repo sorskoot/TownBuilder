@@ -330,7 +330,7 @@
                     "main-menu": {
                         "space": "screen",
                         "scalingMode": "FixedHeightLimitedWidth",
-                        "textMaterial": "DefaultFontMaterial",
+                        "textMaterial": "14",
                         "panelMaterial": "12",
                         "panelMaterialTextured": "13",
                         "manualHeight": 900.0,
@@ -699,6 +699,17 @@
             "Flat": {
                 "flatTexture": "6"
             }
+        },
+        "14": {
+            "link": {
+                "name": "DefaultFontMaterial",
+                "file": "default"
+            },
+            "Text": {
+                "font": "1"
+            },
+            "name": "UI Text",
+            "pipeline": "21"
         }
     },
     "shaders": {
@@ -973,8 +984,7 @@
             "version": [
                 1,
                 4,
-                6,
-                1
+                7
             ]
         },
         "xr": {
@@ -1028,7 +1038,7 @@
         "runtime": {
             "viewObject": "2",
             "visualizePhysX": false,
-            "visualizeColliders": false,
+            "visualizeColliders": true,
             "visualizeOverdraw": false
         },
         "workspace": {
@@ -1194,7 +1204,7 @@
             "castShadows": true,
             "name": "Flat Opaque Textured UI",
             "depthWrite": true,
-            "depthFunction": "less or equal",
+            "depthFunction": "always",
             "depthTest": true
         },
         "19": {
@@ -1209,7 +1219,15 @@
             "blendDestAlpha": "one minus source alpha",
             "depthWrite": true,
             "depthTest": true,
-            "depthFunction": "less or equal"
+            "depthFunction": "always"
+        },
+        "21": {
+            "link": {
+                "name": "Text",
+                "file": "default"
+            },
+            "name": "UI Text",
+            "depthFunction": "always"
         }
     },
     "textures": {

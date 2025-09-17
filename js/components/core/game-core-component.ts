@@ -1,22 +1,22 @@
-import { Component, Object3D } from '@wonderlandengine/api';
-import { property } from '@wonderlandengine/api/decorators.js';
+import { Component } from '@wonderlandengine/api';
 import { TilePrefabs } from './tile-prefabs.js';
-import { AssetsToLoad, GameCore } from '../../classes/core/GameCore.js';
+import { AssetsToLoad, GameCore } from '@/classes/core/GameCore.js';
 import { ResourcePrefabs } from './resource-prefabs.ts';
+import { ServiceLocator } from '@sorskoot/wonderland-components';
 
 export class GameCoreComponent extends Component {
     static TypeName = 'game-core-component';
 
     start() {
-        TilePrefabs.instance.onPrefabsLoaded.add(this._onTilePrefabsLoaded);
-        ResourcePrefabs.instance.onPrefabsLoaded.add(this._onResourcePrefabsLoaded);
+        ServiceLocator.get(TilePrefabs).onPrefabsLoaded.add(this._onTilePrefabsLoaded);
+        ServiceLocator.get(ResourcePrefabs).onPrefabsLoaded.add(this._onResourcePrefabsLoaded);
     }
 
     private _onTilePrefabsLoaded = () => {
-        GameCore.instance.doneLoading(AssetsToLoad.TilePrefabs);
+        ServiceLocator.get(GameCore).doneLoading(AssetsToLoad.TilePrefabs);
     }
 
     private _onResourcePrefabsLoaded = () => {
-        GameCore.instance.doneLoading(AssetsToLoad.ResourcePrefabs);
+        ServiceLocator.get(GameCore).doneLoading(AssetsToLoad.ResourcePrefabs);
     }
 }

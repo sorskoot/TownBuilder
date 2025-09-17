@@ -43,7 +43,7 @@ export class MyCursor extends Component {
      * Initializes the component and sets up the projection matrix.
      */
     public start(): void {
-        this._viewComponent = this.object.getComponent(ViewComponent);
+        this._viewComponent = this.object.getComponent(ViewComponent)!;
         this._viewComponent.getProjectionMatrix(this._projectionMatrix);
     }
 

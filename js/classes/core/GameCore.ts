@@ -1,12 +1,13 @@
 import { RetainEmitter, WonderlandEngine } from "@wonderlandengine/api";
+import { ServiceLocator } from "@sorskoot/wonderland-components";
 
 export enum AssetsToLoad {
     TilePrefabs,
     ResourcePrefabs
 }
 
+@ServiceLocator.register
 export class GameCore {
-    private static _instance: GameCore;
     private _initialized: boolean = false;
 
     public onLoaded = new RetainEmitter();
@@ -15,15 +16,6 @@ export class GameCore {
         [AssetsToLoad.TilePrefabs, false],
         [AssetsToLoad.ResourcePrefabs, false]
     ]);
-
-    static get instance(): GameCore {
-        if (!GameCore._instance) {
-            GameCore._instance = new GameCore();
-        }
-        return GameCore._instance;
-    }
-
-    private constructor() { }
 
     public init(config: GameConfig, engine: WonderlandEngine) {
         this._initialized = true;

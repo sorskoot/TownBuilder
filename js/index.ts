@@ -24,9 +24,10 @@ import {MainMenu} from './ui/main-menu.tsx';
 /* wle:auto-imports:end */
 import { GameCore } from './classes/core/GameCore.js';
 import { WonderlandEngine } from '@wonderlandengine/api';
+import { ServiceLocator } from './utils/ServiceLocator.ts';
 
 export default function (engine: WonderlandEngine) {
-    GameCore.instance.init({}, engine);
+    ServiceLocator.get(GameCore).init({}, engine);
     /* wle:auto-register:start */
 engine.registerComponent(CursorTarget);
 engine.registerComponent(OrbitalCamera);

@@ -8,13 +8,14 @@ import {
     Noise,
 } from '@sorskoot/wonderland-components';
 
-import { GameCore } from '../../classes/core/GameCore.js';
-import { StepsPipeline } from '../../classes/generator/core/StepsPipeline.ts';
-import { BaseStepExec, StepContext } from '../../classes/generator/core/Steps.ts';
-import { CreateHexagonGridExec, CreateHexagonGridParameters } from '../../classes/generator/steps/CreateHexagonGrid.ts';
-import { RenderHexagonGridExec } from '../../classes/generator/steps/RenderHexagonGrid.ts';
-import { FlattenAroundCastleExec, FlattenAroundCastleParameters } from '../../classes/generator/steps/FlattenAroundCastle.ts';
-import { AddResourcesExec } from '../../classes/generator/steps/AddResources.ts';
+import { GameCore } from '@/classes/core/GameCore.js';
+import { StepsPipeline } from '@/classes/generator/core/StepsPipeline.ts';
+import { BaseStepExec, StepContext } from '@/classes/generator/core/Steps.ts';
+import { CreateHexagonGridExec, CreateHexagonGridParameters } from '@/classes/generator/steps/CreateHexagonGrid.ts';
+import { RenderHexagonGridExec } from '@/classes/generator/steps/RenderHexagonGrid.ts';
+import { FlattenAroundCastleExec, FlattenAroundCastleParameters } from '@/classes/generator/steps/FlattenAroundCastle.ts';
+import { AddResourcesExec } from '@/classes/generator/steps/AddResources.ts';
+import { ServiceLocator } from '@sorskoot/wonderland-components';
 
 /**
  * Component responsible for managing the hexagonal grid layout.
@@ -57,7 +58,7 @@ export class HexGridLayout extends Component {
 
         this._myCursor = this.cursorObject.getComponent(MyCursor)!;
         this.highlight.setScalingLocal([0, 0, 0]);
-        GameCore.instance.onLoaded.add(this._onGameLoaded);
+        ServiceLocator.get(GameCore).onLoaded.add(this._onGameLoaded);
     }
 
     /**

@@ -10,6 +10,10 @@
         "noEmit": true,
         "allowJs": false,
         "strict": true,
+        "baseUrl": ".", // Sets the base directory for resolving paths
+        "paths": {
+            "@/*": ["js/*"] // Maps "@/something" to "js/something"
+        },
         "forceConsistentCasingInFileNames": true,
         "emitDecoratorMetadata": true,
         "typeRoots": ["./node_modules/@types", "js/types/materials.d.ts"]

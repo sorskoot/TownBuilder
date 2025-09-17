@@ -14,6 +14,7 @@ import {
 import { Object3D } from '@wonderlandengine/api';
 import { TilePrefabs } from '../../../components/core/tile-prefabs.ts';
 import { ResourcePrefabs } from '../../../components/core/resource-prefabs.ts';
+import { ServiceLocator } from '@sorskoot/wonderland-components';
 
 const orientations = [0, 60, 120, 180, 240, 300];
 
@@ -26,6 +27,12 @@ export class RenderHexagonGridExec extends BaseStepExec<StepInput, NoStepParamet
         [TileType.Empty, 'TileEmpty'],
         [TileType.Road, 'TileRoad'],
     ]);
+
+    @ServiceLocator.inject(TilePrefabs)
+    private declare tilePrefabs: TilePrefabs;
+
+    @ServiceLocator.inject(ResourcePrefabs)
+    private declare resourcePrefabs: ResourcePrefabs;
 
     execute(context: StepContext,
         input: StepInput,
@@ -47,19 +54,20 @@ export class RenderHexagonGridExec extends BaseStepExec<StepInput, NoStepParamet
         for (const tile of tiles) {
             const pos = tile.to2D();
             let hex: Object3D;
+
             switch (tile.type) {
                 case TileType.Empty: {
-                    hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Empty)!)!;
+                    hex = this.tilePrefabs.spawn(this._tileMap.get(TileType.Empty)!)!;
                     hex.setPositionWorld([pos.x, -0.25, pos.y]);
                     break;
                 }
                 case TileType.Water: {
-                    hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Water)!)!;
+                    hex = this.tilePrefabs.spawn(this._tileMap.get(TileType.Water)!)!;
                     hex.setPositionWorld([pos.x, -0.25, pos.y]);
                     break;
                 }
                 default: {
-                    hex = TilePrefabs.instance.spawn(this._tileMap.get(TileType.Grass)!)!;
+                    hex = this.tilePrefabs.spawn(this._tileMap.get(TileType.Grass)!)!;
                     hex.setPositionWorld([
                         pos.x,
                         tile.elevation * context.config.heightScale,
@@ -69,15 +77,15 @@ export class RenderHexagonGridExec extends BaseStepExec<StepInput, NoStepParamet
                 }
             }
             if (tile.hasTag('treeDense')) {
-                const tree = ResourcePrefabs.instance.spawn('ResourceTreeDense')!;
+                const tree = this.resourcePrefabs.spawn('ResourceTreeDense')!;
                 tree.rotateAxisAngleDegLocal([0, 1, 0], context.random.getItem(orientations));
                 tree.setPositionWorld([pos.x, tile.elevation * context.config.heightScale, pos.y]);
             } else if (tile.hasTag('treeSparse')) {
-                const tree = ResourcePrefabs.instance.spawn('ResourceTreeSparse')!;
+                const tree = this.resourcePrefabs.spawn('ResourceTreeSparse')!;
                 tree.rotateAxisAngleDegLocal([0, 1, 0], context.random.getItem(orientations));
                 tree.setPositionWorld([pos.x, tile.elevation * context.config.heightScale, pos.y]);
             } else if (tile.hasTag('rock')) {
-                const rock = ResourcePrefabs.instance.spawn('ResourceRock')!;
+                const rock = this.resourcePrefabs.spawn('ResourceRock')!;
                 rock.rotateAxisAngleDegLocal([0, 1, 0], context.random.getItem(orientations));
                 rock.setPositionWorld([pos.x, tile.elevation * context.config.heightScale, pos.y]);
             }
@@ -91,7 +99,7 @@ export class RenderHexagonGridExec extends BaseStepExec<StepInput, NoStepParamet
             throw new Error('Castle tile not found in the grid. The castle is probably not created.');
         }
 
-        const castleObject = TilePrefabs.instance.spawn(
+        const castleObject = this.tilePrefabs.spawn(
             'BuildingCastle',
             castleTile.object
         );

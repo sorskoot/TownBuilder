@@ -1,6 +1,6 @@
 import { vec3 } from "gl-matrix";
 import { HexagonTile, TILE_SIZE } from "./HexagonTile.js";
-import { UniqueStack } from "../utils/UniqueStack.js";
+import { UniqueStack } from "@sorskoot/wonderland-components";
 import { HexGridLayout } from "../components/core/hex-grid-layout.js";
 
 const TILE_HEIGHT_OFFSET = -1;

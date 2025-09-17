@@ -1,5 +1,6 @@
-import { PrefabsBase } from '../../utils/PrefabBase.ts';
+import { PrefabsBase, ServiceLocator } from '@sorskoot/wonderland-components';
 
+@ServiceLocator.registerComponent
 export class ResourcePrefabs extends PrefabsBase {
     static TypeName = 'resource-prefabs';
     static InheritProperties = true;
@@ -7,19 +8,4 @@ export class ResourcePrefabs extends PrefabsBase {
     PrefabBinName(): string {
         return 'Resources.bin';
     }
-
-    private static _instance: ResourcePrefabs;
-    static get instance(): ResourcePrefabs {
-        return ResourcePrefabs._instance;
-    }
-
-    init() {
-        if (ResourcePrefabs._instance) {
-            console.error(
-                'There can only be one instance of ResourcePrefabs Component'
-            );
-        }
-        ResourcePrefabs._instance = this;
-    }
-
 }
